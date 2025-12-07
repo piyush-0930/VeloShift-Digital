@@ -1,0 +1,175 @@
+/* -----------------------------------
+   VELOSHIFT GLOBAL COLOR THEME
+----------------------------------- */
+:root {
+  --vs-bg: #0B142B;
+  --vs-primary: #1E7BCE;
+  --vs-secondary: #38A7F0;
+  --vs-light: #E5E7EB;
+
+  /* Stronger grid lines */
+  --vs-grid-line: rgba(255, 255, 255, 0.18);
+}
+
+/* Admin theme override — applied when a parent has .admin-theme */
+.admin-theme {
+  /* New admin palette provided by user */
+  --vs-bg: #522258; /* dark purple (rgb(82,34,88)) */
+  --vs-primary: #8C3061; /* primary purple (rgb(140,48,97)) */
+  --vs-secondary: #C63C51; /* warm red (rgb(198,60,81)) */
+  --vs-accent: #D95F59; /* accent (rgb(217,95,89)) */
+  --vs-light: #D3DAD9; /* neutral light text for readability */
+}
+
+/* Admin-scoped overrides to apply the palette consistently */
+.admin-theme .admin-panel {
+  background: linear-gradient(180deg, rgba(82,34,88,0.85), rgba(140,48,97,0.75));
+  border-color: rgba(255,255,255,0.03);
+}
+
+.admin-theme .admin-card {
+  background: linear-gradient(90deg, rgba(140,48,97,0.08), rgba(198,60,81,0.04));
+  border: 1px solid rgba(217,95,89,0.06);
+}
+
+.admin-theme .btn-primary {
+  background: linear-gradient(90deg, var(--vs-primary), var(--vs-secondary));
+  color: var(--vs-light);
+}
+
+.admin-theme .admin-table thead th {
+  color: var(--vs-light);
+  background: linear-gradient(90deg, rgba(82,34,88,0.06), rgba(140,48,97,0.04));
+}
+
+.admin-theme .btn-danger {
+  background: linear-gradient(90deg, rgba(198,60,81,0.08), rgba(217,95,89,0.06));
+  color: var(--vs-accent);
+  border: 1px solid rgba(198,60,81,0.12);
+}
+
+.admin-theme .resume-link { color: var(--vs-accent); text-decoration: underline; }
+
+/* Toast styling when admin-theme is active: match accent colors */
+.admin-theme ~ div[style] > div > div {
+  /* this targets the inline toasts rendered by Toast.jsx indirectly; keep subtle */
+}
+
+/* -----------------------------------
+   TAILWIND BASE STYLES
+----------------------------------- */
+@import "tailwindcss";
+
+/* -----------------------------------
+   CUSTOM UTILITIES
+----------------------------------- */
+
+/* Premium visible grid — smaller squares */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--vs-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--vs-grid-line) 1px, transparent 1px);
+
+  /* ↓ Reduced size: smaller, sharper grid */
+  background-size: 55px 55px;
+
+  background-position: center;
+}
+
+/* Body styling */
+body {
+  background-color: transparent;
+  color: var(--vs-light);
+  overflow-x: hidden;
+}
+
+/* -----------------------------------
+   CUSTOM SCROLLBAR (Veloshift Theme)
+----------------------------------- */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vs-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vs-primary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vs-secondary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--vs-primary) var(--vs-bg);
+}
+
+/* -----------------------------------
+   ADMIN PANEL STYLES (Veloshift Theme)
+----------------------------------- */
+
+.admin-panel {
+  background: linear-gradient(180deg, rgba(11,20,43,0.6), rgba(6,10,20,0.6));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table thead th {
+  text-align: left;
+  padding: 12px 8px;
+  font-weight: 600;
+  color: var(--vs-secondary);
+  background: rgba(8,20,40,0.45);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.admin-table tbody td {
+  padding: 10px 8px;
+  vertical-align: top;
+  color: var(--vs-light);
+}
+.admin-row { border-top: 1px solid rgba(255,255,255,0.03); }
+
+.admin-card {
+  background: linear-gradient(90deg, rgba(30,123,206,0.06), rgba(56,167,240,0.03));
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(56,167,240,0.06);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg,var(--vs-primary),var(--vs-secondary));
+  color: #051022;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.btn-danger {
+  background: linear-gradient(90deg, rgba(255,60,80,0.08), rgba(255,60,80,0.04));
+  color: #ff6b6b;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,60,80,0.12);
+}
+
+.resume-link { color: var(--vs-secondary); text-decoration: underline; }
+
+/* Timeline & About improvements */
+.timeline-card { background: linear-gradient(90deg, rgba(17,25,48,0.6), rgba(11,20,43,0.55)); border: 1px solid rgba(255,255,255,0.04); }
+.timeline-dot { width: 14px; height: 14px; border-radius: 999px; background: var(--vs-secondary); box-shadow: 0 0 12px rgba(56,167,240,0.18); border: 2px solid rgba(255,255,255,0.06); }
+
+.muted { color: rgba(229,231,235,0.65); }
+
+.small { font-size: 0.85rem }
+
+.truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
