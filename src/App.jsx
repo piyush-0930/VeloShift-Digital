@@ -6,7 +6,6 @@ import Services from "./pages/Services";
 import Industries from "./pages/Industries";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
-import ServiceDetail from "./pages/ServiceDetail"; // ✅ Missing import fixed
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 
@@ -27,7 +26,6 @@ export default function App() {
         <Route path="/industries" element={<Industries />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/services/:id" element={<ServiceDetail />} /> 
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
