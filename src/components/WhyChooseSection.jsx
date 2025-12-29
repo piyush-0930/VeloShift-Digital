@@ -1,8 +1,8 @@
 export default function WhyChooseSection() {
   const features = [
     {
-      title: "Engineering Excellence",
-      desc: "Advanced expertise in CAD, BIM, automation, and industrial engineering backed by proven delivery standards.",
+      title: "Expert Development",
+      desc: "Skilled engineers & developers building high-performance web apps, mobile apps, and scalable digital systems.",
       color: "#2ED47A",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" 
@@ -13,8 +13,8 @@ export default function WhyChooseSection() {
       )
     },
     {
-      title: "Experienced Team",
-      desc: "Engineers, developers, automation specialists delivering reliable, industry-ready solutions.",
+      title: "Skilled AI Team",
+      desc: "AI engineers delivering chatbots, automation pipelines, ML models, and intelligent business systems.",
       color: "#FF8B3D",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -25,8 +25,8 @@ export default function WhyChooseSection() {
       )
     },
     {
-      title: "MSME Certified",
-      desc: "Recognized for quality, compliance, reliability, and high delivery standards.",
+      title: "Trusted & Certified",
+      desc: "A reliable, quality-driven tech company trusted by startups and enterprises for secure delivery.",
       color: "#38A7F0",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -37,8 +37,8 @@ export default function WhyChooseSection() {
       )
     },
     {
-      title: "End-to-End Delivery",
-      desc: "From planning to execution — engineering, software, IoT, cloud, and automation under one roof.",
+      title: "Complete Tech Delivery",
+      desc: "Web, apps, AI, cloud, DevOps, APIs — everything you need delivered under one roof with seamless execution.",
       color: "#A855F7",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +49,8 @@ export default function WhyChooseSection() {
       )
     },
     {
-      title: "Innovation-Driven",
-      desc: "AI automation, digital twins, simulations, and modern cloud adoption to power future-ready industries.",
+      title: "Innovation Focused",
+      desc: "We use modern technologies like automation, cloud, AI, and smart integrations to build future-ready solutions.",
       color: "#14B8A6",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +61,8 @@ export default function WhyChooseSection() {
       )
     },
     {
-      title: "Premium Support",
-      desc: "Transparent communication, reliable partnerships, and long-term technical support.",
+      title: "Reliable Support",
+      desc: "Smooth communication, transparent process, and long-term tech support for scaling your business.",
       color: "#FBBF24",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@ export default function WhyChooseSection() {
         <div className="h-1 w-28 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]
                         mx-auto mt-4 rounded-full shadow-[0_0_15px_var(--vs-primary)]"></div>
 
-        {/* FEATURE GRID (NO BOXES) */}
+        {/* FEATURES */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-14 max-w-7xl mx-auto">
 
           {features.map((item, i) => (

@@ -1,41 +1,41 @@
 export default function Industries() {
   const industries = [
     {
-      title: "Manufacturing",
-      desc: "Automation, PLC/SCADA systems, digital twins, predictive maintenance and process optimization for factories.",
-      icon: "🏭",
-      color: "text-[#38A7F0]"
+      title: "Information Technology (IT) & SaaS",
+      desc: "Custom SaaS development, AI copilots, automation engines, cloud-ready platforms and enterprise workflow systems.",
+      icon: "💻",
+      color: "text-[#38A7F0]",
     },
     {
-      title: "Construction & Infrastructure",
-      desc: "BIM modeling, MEP coordination, structural drafting, quantity takeoff, and real-time collaboration workflows.",
-      icon: "🏗️",
-      color: "text-[#4fd1c5]"
+      title: "FinTech & Digital Payments",
+      desc: "Secure financial dashboards, payment automation, fraud analysis tools, AML systems and API-based integrations.",
+      icon: "💳",
+      color: "text-[#4fd1c5]",
     },
     {
-      title: "Energy & Utilities",
-      desc: "Smart grid systems, IoT monitoring, renewable energy modeling, and efficient load-flow automation solutions.",
-      icon: "⚡",
-      color: "text-yellow-400"
+      title: "Healthcare & MedTech",
+      desc: "AI-driven diagnostics, appointment automation, EHR dashboards, telemedicine platforms and workflow optimization.",
+      icon: "🏥",
+      color: "text-yellow-400",
     },
     {
-      title: "Automotive",
-      desc: "3D CAD, ECAD/MCAD integration, prototyping, quality testing automation, and product lifecycle solutions.",
-      icon: "🚘",
-      color: "text-orange-400"
+      title: "E-commerce & Online Marketplaces",
+      desc: "High-performance storefronts, logistics automation, AI recommendations, inventory systems and checkout integrations.",
+      icon: "🛒",
+      color: "text-orange-400",
     },
     {
-      title: "Aerospace & Defense",
-      desc: "High-precision engineering, simulation workflows, secure automation, and compliance-driven digital systems.",
-      icon: "✈️",
-      color: "text-purple-400"
+      title: "Real Estate & PropTech",
+      desc: "Property management systems, automated CRM, AI assistants, tenant portals and cloud-powered analytics.",
+      icon: "🏙️",
+      color: "text-purple-400",
     },
     {
-      title: "Smart Cities & IoT",
-      desc: "Sensor-driven automation, real-time dashboards, surveillance integration, and AI-based city planning tools.",
-      icon: "🌐",
-      color: "text-[#2ED47A]"
-    }
+      title: "Logistics, Supply Chain & Smart Ops",
+      desc: "IoT tracking, route automation, fleet dashboards, warehouse optimization and real-time monitoring systems.",
+      icon: "🚚",
+      color: "text-[#2ED47A]",
+    },
   ];
 
   return (
@@ -52,8 +52,8 @@ export default function Industries() {
         </h1>
 
         <p className="relative z-10 mt-5 max-w-3xl mx-auto text-[var(--vs-light)]/80 text-lg">
-          Veloshift Technology delivers domain-specific engineering, automation, and
-          digital solutions tailored for high-performance industries.
+          Veloshift Technology delivers AI, cloud, automation and full-stack
+          engineering solutions tailored for modern, fast-moving digital industries.
         </p>
       </div>
 
@@ -61,7 +61,6 @@ export default function Industries() {
           INDUSTRY GRID
       ================================= */}
       <section className="py-20 px-6 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-
         {industries.map((ind, i) => (
           <div
             key={i}
@@ -80,7 +79,6 @@ export default function Industries() {
             </p>
           </div>
         ))}
-
       </section>
 
       {/* ================================
@@ -88,10 +86,10 @@ export default function Industries() {
       ================================= */}
       <div className="w-full py-20 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
-          Want Industry-Ready Engineering & Automation?
+          Want an Industry-Focused Digital Solution?
         </h2>
         <p className="text-[var(--vs-light)]/80 max-w-2xl mx-auto mb-8">
-          Let's build solutions that match your operational demands and future-driven goals.
+          Let’s build scalable, intelligent and automation-ready systems tailored for your industry.
         </p>
 
         <a
@@ -103,7 +101,6 @@ export default function Industries() {
           Contact Us
         </a>
       </div>
-
     </div>
   );
 }

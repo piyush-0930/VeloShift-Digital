@@ -1,25 +1,25 @@
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Rahul Sharma",
-      role: "CTO, NexaBuild Industries",
+      name: "Rahul Mehta",
+      role: "CTO, NovaStack Technologies",
       image: "https://i.pravatar.cc/150?img=1",
       message:
-        "Veloshift Technology elevated our engineering workflow with world-class automation and precision delivery. Their professionalism stands out."
+        "Veloshift transformed our product with a modern full-stack architecture and seamless cloud deployment. Their engineering quality is unmatched."
     },
     {
       name: "Ananya Verma",
-      role: "Product Manager, AeroTech Systems",
+      role: "Product Manager, AeroSys Solutions",
       image: "https://i.pravatar.cc/150?img=5",
       message:
-        "Their AI-driven optimization reduced operational delays by 42%. Veloshift is now our core innovation partner."
+        "Their AI automation workflows reduced manual operations drastically and improved our delivery speed. A trusted long-term tech partner."
     },
     {
       name: "Michael Lee",
-      role: "Head of Digital, Zenith InfraTech",
+      role: "Head of Digital Innovation, Zenith Industries",
       image: "https://i.pravatar.cc/150?img=3",
       message:
-        "A reliable technical partner we trust. Extremely clean execution and scalable architecture suited for enterprise adoption."
+        "Veloshift’s API integrations and scalable cloud setup helped us unify multiple systems flawlessly. Highly reliable and extremely professional."
     }
   ];
 
@@ -35,7 +35,7 @@ export default function TestimonialsSection() {
       <div className="h-1 w-32 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]
                       mx-auto mt-4 rounded-full shadow-[0_0_15px_var(--vs-primary)]"></div>
 
-      {/* TESTIMONIAL GRID — NO BOXES */}
+      {/* TESTIMONIAL GRID */}
       <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 max-w-6xl mx-auto">
 
         {testimonials.map((t, index) => (
@@ -89,14 +89,13 @@ export default function TestimonialsSection() {
               “{t.message}”
             </p>
 
-            {/* SOFT UNDERLINE INDICATOR */}
+            {/* INDICATOR */}
             <div className="
                 h-1 w-14 rounded-full mt-6 
                 bg-gradient-to-r from-transparent via-[var(--vs-primary)] to-transparent 
                 opacity-50 group-hover:opacity-100
                 transition-all duration-300
-              ">
-            </div>
+              "></div>
           </div>
         ))}
 

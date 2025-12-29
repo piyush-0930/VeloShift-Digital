@@ -16,8 +16,8 @@ export default function Footer() {
           </h2>
 
           <p className="mt-5 text-[var(--vs-light)]/70 leading-relaxed">
-            Delivering intelligent, scalable and automation-driven software
-            solutions to power modern industries across the world.
+            Empowering businesses with intelligent AI systems, scalable web & app 
+            development, cloud architecture, and automation-driven digital solutions.
           </p>
 
           {/* SOCIAL ICONS */}
@@ -45,14 +45,14 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* SERVICES */}
+        {/* SERVICES UPDATED */}
         <div>
           <h3 className="text-xl font-semibold text-white mb-4">Services</h3>
           <ul className="space-y-3 text-[var(--vs-light)]/80">
             <li>AI & Automation</li>
-            <li>Cloud Solutions</li>
-            <li>Engineering Design</li>
-            <li>Digital Transformation</li>
+            <li>Web & App Development</li>
+            <li>Cloud & DevOps</li>
+            <li>API Integrations</li>
           </ul>
         </div>
 
@@ -62,9 +62,7 @@ export default function Footer() {
           <ul className="space-y-3 text-[var(--vs-light)]/80">
             <li>Email: business.veloshift@gmail.com</li>
             <li>Phone: +91 95186-18418</li>
-            <li>
-              Office: CU-TBI, Mohali
-            </li>
+            <li>Office: CU-TBI, Mohali</li>
           </ul>
         </div>
       </div>

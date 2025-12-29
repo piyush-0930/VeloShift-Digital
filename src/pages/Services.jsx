@@ -1,83 +1,81 @@
 export default function Services() {
   const services = [
     {
-      title: "Design & Drafting",
-      icon: "ri-pencil-ruler-2-line",
-      desc: "High-precision 2D/3D CAD drafting, industrial component modeling, sheet-metal design, product detailing and manufacturing-ready documentation.",
-    },
-    {
-      title: "Product Engineering",
-      icon: "ri-cpu-line",
-      desc: "Mechanical, electrical & embedded product engineering — concept to prototype, structural validation, simulation and final production design.",
-    },
-    {
-      title: "BIM & Infrastructure",
-      icon: "ri-building-4-line",
-      desc: "End-to-end BIM modeling for civil, mechanical & electrical domains, clash detection, digital twin development and coordinated construction modeling.",
-    },
-    {
-      title: "Industrial IoT & Data Systems",
-      icon: "ri-radar-line",
-      desc: "Smart monitoring systems, sensor integration, predictive maintenance, IIoT dashboards and real-time industrial data analytics.",
-    },
-    {
-      title: "Automation & Robotics",
+      title: "AI & Automation",
       icon: "ri-robot-line",
-      desc: "PLC/SCADA automation, robotics integration, workflow automation, control systems and smart industrial automation solutions.",
+      desc: "AI chatbots, workflow automation, ML-driven optimization and intelligent systems that improve business performance.",
     },
     {
-      title: "Software & Cloud Solutions",
+      title: "Web & App Development",
+      icon: "ri-window-line",
+      desc: "Scalable web applications, mobile apps, dashboards and custom digital platforms built with modern frameworks.",
+    },
+    {
+      title: "Cloud & DevOps",
       icon: "ri-cloud-line",
-      desc: "Full-stack software, AI-driven applications, cloud-native platforms, internal business tools and enterprise automation solutions.",
-    }
+      desc: "Cloud deployments, CI/CD pipelines, infrastructure management and secure cloud-native architectures.",
+    },
+    {
+      title: "API Integrations",
+      icon: "ri-link-m",
+      desc: "Third-party integrations, payment gateways, CRM/ERP connections, automation tools and custom API development.",
+    },
+    {
+      title: "SaaS Tools & Platforms",
+      icon: "ri-stack-line",
+      desc: "End-to-end product development for SaaS platforms, admin panels, multi-tenant systems and enterprise tooling.",
+    },
+    {
+      title: "Business Automation Systems",
+      icon: "ri-cpu-line",
+      desc: "Internal tools, workflow engines, automation dashboards and smart operational systems for enterprises.",
+    },
   ];
 
   const processSteps = [
     {
       icon: "ri-search-eye-line",
-      title: "Discovery & Requirement Mapping",
-      desc: "We study your business challenges, workflows, KPIs and expected deliverables to create a clear technical roadmap.",
+      title: "Discovery & Planning",
+      desc: "Understanding your vision, use-case, bottlenecks, KPIs and building a detailed requirement map.",
     },
     {
       icon: "ri-draft-line",
-      title: "Concept & System Architecture",
-      desc: "We design engineering blueprints, cloud architecture, automation flows, BIM layouts or product specifications.",
+      title: "System Architecture",
+      desc: "Designing system blueprint, cloud structure, automation flows or full-stack architecture.",
     },
     {
-      icon: "ri-pen-nib-line",
-      title: "Design/Engineering Drafting",
-      desc: "CAD drafting, 3D modeling, BIM detailing, component design, system layouts and software UI/UX planning.",
+      icon: "ri-pencil-ruler-line",
+      title: "UI/UX & Prototyping",
+      desc: "Creating seamless user experiences, interactive mockups and intuitive workflow designs.",
     },
     {
       icon: "ri-tools-line",
       title: "Development & Integration",
-      desc: "Mechanical builds, electrical systems, software development, PLC/IoT integration or cloud deployment.",
+      desc: "API development, frontend engineering, backend logic, automation pipelines and cloud setup.",
     },
     {
       icon: "ri-shield-check-line",
-      title: "Testing & Validation",
-      desc: "Performance testing, simulations, stress analysis, QA/QC, automation testing or model validation.",
+      title: "Testing & Quality Validation",
+      desc: "Automation testing, performance checks, load testing and validation under production conditions.",
     },
     {
       icon: "ri-rocket-line",
-      title: "Deployment & Ongoing Support",
-      desc: "Final implementation, onboarding, documentation, maintenance and continuous optimization.",
+      title: "Deployment & Support",
+      desc: "Launch, monitoring, training, documentation and long-term support for high uptime.",
     },
   ];
 
   const roi = [
-    { value: "20%", label: "Average Cost Reduction" },
-    { value: "30%", label: "Faster Project Delivery" },
-    { value: "99.9%", label: "System Uptime" },
+    { value: "40%", label: "Operational Efficiency Boost" },
+    { value: "50%", label: "Faster Project Delivery" },
+    { value: "99.9%", label: "Cloud Reliability" },
     { value: "97%", label: "Client Satisfaction" },
   ];
 
   return (
     <div className="w-full bg-[var(--vs-bg)] text-[var(--vs-light)]">
 
-      {/* ============================
-          HERO SECTION WITH GRID
-      ============================= */}
+      {/* ============================ HERO ============================ */}
       <section className="relative py-24 text-center px-6 overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-20"></div>
 
@@ -90,14 +88,12 @@ export default function Services() {
         </h1>
 
         <p className="relative z-10 max-w-2xl mx-auto mt-6 text-lg text-[var(--vs-light)]/85 leading-relaxed">
-          Veloshift Co delivers engineering, automation, BIM, IoT and software solutions 
-          built to optimize industrial performance, reduce operational costs and accelerate business growth.
+          Veloshift Technology delivers AI systems, cloud engineering, web development,
+          automation tools and integration services designed for modern digital enterprises.
         </p>
       </section>
 
-      {/* ============================
-          OUR SERVICES
-      ============================= */}
+      {/* ============================ SERVICES ============================ */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white">
           What We Offer
@@ -121,60 +117,53 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ============================
-          COMPARISON MATRIX
-      ============================= */}
+      {/* ============================ DIFFERENCE ============================ */}
       <section className="py-20 px-6 max-w-6xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          What Sets Us Apart
+          What Makes Us Different
         </h2>
         <div className="h-1 w-24 mx-auto bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]
                         mt-3 mb-14 rounded-full"></div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-          {/* Column 1 */}
           <div className="bg-[#121b36] border border-white/10 p-8 rounded-xl">
-            <h3 className="text-xl font-bold text-white mb-4">Typical Agencies</h3>
+            <h3 className="text-xl font-bold text-white mb-4">Traditional Agencies</h3>
             <ul className="space-y-2 text-[var(--vs-light)]/75">
-              <li>❌ Limited engineering depth</li>
-              <li>❌ Outsourced technical work</li>
-              <li>❌ No long-term support</li>
-              <li>❌ Slow delivery cycles</li>
+              <li>❌ Outdated technology stack</li>
+              <li>❌ Limited AI/Automation expertise</li>
+              <li>❌ Slow development cycles</li>
+              <li>❌ Weak cloud support</li>
             </ul>
           </div>
 
-          {/* Column 2 */}
           <div className="bg-[#0F1A30] border border-[var(--vs-secondary)]/40 p-8 rounded-xl shadow-lg shadow-[var(--vs-secondary)]/10 scale-[1.02]">
             <h3 className="text-xl font-bold text-white mb-4">Veloshift Technology</h3>
             <ul className="space-y-2 text-[var(--vs-light)]">
-              <li>✔ Engineering + Software + Automation</li>
-              <li>✔ In-house skilled technical team</li>
-              <li>✔ 24/7 Support & Reporting</li>
-              <li>✔ Modern delivery cycles</li>
+              <li>✔ AI + Cloud + Full Stack + Automation</li>
+              <li>✔ End-to-end product delivery</li>
+              <li>✔ Skilled in-house engineering team</li>
+              <li>✔ Fast delivery cycles</li>
             </ul>
           </div>
 
-          {/* Column 3 */}
           <div className="bg-[#121b36] border border-white/10 p-8 rounded-xl">
-            <h3 className="text-xl font-bold text-white mb-4">Traditional Firms</h3>
+            <h3 className="text-xl font-bold text-white mb-4">Freelancers</h3>
             <ul className="space-y-2 text-[var(--vs-light)]/75">
-              <li>⚠️ Manual workflows</li>
-              <li>⚠️ Limited digital transformation</li>
-              <li>⚠️ Delayed reporting</li>
-              <li>⚠️ Rigid execution</li>
+              <li>⚠️ No long-term support</li>
+              <li>⚠️ Inconsistent delivery</li>
+              <li>⚠️ Limited system architecture skills</li>
+              <li>⚠️ No enterprise scaling</li>
             </ul>
           </div>
 
         </div>
       </section>
 
-      {/* ============================
-          PROVEN IMPLEMENTATION PROCESS
-      ============================= */}
+      {/* ============================ PROCESS ============================ */}
       <section className="py-24 px-6 max-w-6xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Our Proven Implementation Process
+          Our Proven Workflow
         </h2>
         <div className="h-1 w-28 mx-auto bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]
                         mt-3 mb-14 rounded-full"></div>
@@ -192,12 +181,10 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ============================
-          ROI & METRICS
-      ============================= */}
+      {/* ============================ ROI ============================ */}
       <section className="py-20 px-6 bg-[#0F1A30] border-t border-white/10 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Measurable ROI & Performance Metrics
+          Measurable ROI & Impact
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 max-w-5xl mx-auto mt-16">
@@ -212,17 +199,15 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ============================
-          CTA SECTION
-      ============================= */}
+      {/* ============================ CTA ============================ */}
       <section className="py-24 text-center px-6">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Let’s Build Your Next Engineering Breakthrough
+          Ready to Build with Veloshift?
         </h2>
 
         <p className="mt-4 max-w-2xl mx-auto text-[var(--vs-light)]/80">
-          Whether it’s automation, IoT, CAD, BIM, cloud, or full product engineering —
-          we help you move faster, smarter, and more efficiently.
+          AI, automation, cloud engineering or full-stack development — let’s build
+          systems that scale your business.
         </p>
 
         <a

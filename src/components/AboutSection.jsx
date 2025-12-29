@@ -15,11 +15,11 @@ export default function AboutSection() {
 
       {/* DESCRIPTION */}
       <p className="mt-10 text-lg md:text-xl text-[var(--vs-light)]/90 max-w-4xl mx-auto leading-relaxed">
-        Veloshift Technology is a modern software, AI, and automation company
-        helping businesses scale through intelligent digital solutions. We build
-        high-performance applications, AI-powered systems, automated workflows,
-        and cloud-native platforms that enable organizations to innovate faster,
-        operate smarter, and grow efficiently.
+        Veloshift Technology is a modern tech agency delivering end-to-end digital
+        solutions for businesses of all sizes. We specialize in web & app development,
+        AI-powered automation, cloud deployments, API integrations, and technical
+        consulting. Our mission is to help organizations innovate faster with
+        scalable, secure, and intelligent digital systems that drive real growth.
       </p>
 
     </section>

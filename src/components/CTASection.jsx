@@ -9,13 +9,14 @@ export default function CTASection() {
       <div className="relative z-10 max-w-3xl mx-auto">
 
         <h2 className="text-3xl md:text-5xl font-extrabold text-white">
-          Ready to Accelerate Your{" "}
-          <span className="text-[var(--vs-secondary)]">Digital Transformation?</span>
+          Ready to Build Smarter, Faster &{" "}
+          <span className="text-[var(--vs-secondary)]">AI-Driven Solutions?</span>
         </h2>
 
         <p className="mt-6 text-lg text-[var(--vs-light)]/80 leading-relaxed">
-          Partner with VeloShift Co to build scalable digital solutions, automate workflows, 
-          and leverage AI-driven systems designed for modern businesses.
+          Team up with Veloshift Technology to develop powerful web & app solutions,
+          automate business workflows, deploy secure cloud infrastructure, 
+          and integrate intelligent AI systems tailored for modern enterprises.
         </p>
 
         <a

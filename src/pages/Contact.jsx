@@ -16,12 +16,12 @@ export default function Contact() {
         </h1>
 
         <p className="mt-4 max-w-2xl mx-auto text-lg text-[var(--vs-light)]/80 leading-relaxed">
-          Whether you need engineering expertise, AI solutions, automation, or
-          digital transformation—Veloshift Co is here to help bring your vision to life.
+          Whether you need engineering expertise, AI solutions, automation,
+          or digital transformation — Veloshift Co is here to help bring
+          your vision to life.
         </p>
       </section>
 
-      {/* Divider */}
       <Divider />
 
       {/* ================================
@@ -48,7 +48,7 @@ export default function Contact() {
             {
               title: "Sales Inquiries",
               desc: "For questions about our services or partnerships.",
-              icon: "ri-money-rupee-circle-line", // ✔ ADDED SALES ICON
+              icon: "ri-money-rupee-circle-line",
             },
             {
               title: "General Questions",
@@ -69,7 +69,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Divider */}
       <Divider />
 
       {/* ================================
@@ -80,7 +79,6 @@ export default function Contact() {
         {/* LEFT SIDE — CONTACT DETAILS */}
         <div className="space-y-10">
 
-          {/* CONTACT INFO CARD */}
           <div className="bg-[#0F1A30] border border-white/10 rounded-2xl p-10">
             <h2 className="text-2xl font-bold text-white">Contact Information</h2>
             <Underline />
@@ -146,7 +144,146 @@ export default function Contact() {
 }
 
 /* =====================================
-   SMALL UI COMPONENTS
+   CONTACT FORM COMPONENT
+===================================== */
+
+function ContactForm() {
+  const [state, setState] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    message: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
+
+  function onChange(e) {
+    const { name, value } = e.target;
+    setState((s) => ({ ...s, [name]: value }));
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+
+    if (!state.name || !state.email || !state.message) {
+      const { showError } = await import("../utils/message");
+      showError("Please fill name, email and message");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("https://veloshift-backend.onrender.com/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: state.name,
+          email: state.email,
+          phone: state.phone,
+          company: state.company,
+          subject: "Website inquiry",
+          message: state.message,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Failed to send");
+      }
+
+      const { showSuccess } = await import("../utils/message");
+      showSuccess("Message sent — we will contact you soon");
+
+      setState({ name: "", email: "", phone: "", company: "", message: "" });
+    } catch (err) {
+      const { showError } = await import("../utils/message");
+      showError(err.message);
+    }
+
+    setSubmitting(false);
+  }
+
+  return (
+    <form className="space-y-6 mt-6" onSubmit={onSubmit}>
+      {/* NAME + EMAIL */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="text-sm font-medium">Your Name</label>
+          <input
+            name="name"
+            value={state.name}
+            onChange={onChange}
+            placeholder="Full Name"
+            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">Email Address</label>
+          <input
+            name="email"
+            type="email"
+            value={state.email}
+            onChange={onChange}
+            placeholder="Email Address"
+            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
+          />
+        </div>
+      </div>
+
+      {/* PHONE + COMPANY */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="text-sm font-medium">Phone Number</label>
+          <input
+            name="phone"
+            value={state.phone}
+            onChange={onChange}
+            placeholder="Phone Number"
+            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">Company (Optional)</label>
+          <input
+            name="company"
+            value={state.company}
+            onChange={onChange}
+            placeholder="Your Company"
+            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
+          />
+        </div>
+      </div>
+
+      {/* MESSAGE */}
+      <div>
+        <label className="text-sm font-medium">Message</label>
+        <textarea
+          name="message"
+          value={state.message}
+          onChange={onChange}
+          placeholder="Write your message here..."
+          rows={5}
+          className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
+        />
+      </div>
+
+      {/* BUTTON */}
+      <button
+        type="submit"
+        disabled={submitting}
+        className="w-full mt-4 px-6 py-3 rounded-md text-lg font-semibold text-white bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]"
+      >
+        {submitting ? "Sending..." : "Send Message"}
+      </button>
+    </form>
+  );
+}
+
+/* =====================================
+   SMALL COMPONENTS
 ===================================== */
 
 function Divider() {
@@ -163,76 +300,4 @@ function Underline({ center = false }) {
       bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded-full`}
     ></div>
   );
-}
-
-function FormField({ label, placeholder, type = "text" }) {
-  return (
-    <div>
-      <label className="text-sm font-medium">{label}</label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white 
-        focus:border-[var(--vs-secondary)] outline-none"
-      />
-    </div>
-  );
-}
-
-function ContactForm(){
-  const [state, setState] = useState({ name:'', email:'', phone:'', company:'', message:'' });
-  const [submitting, setSubmitting] = useState(false);
-
-  function onChange(e){
-    const { name, value } = e.target;
-    setState(s=>({...s,[name]:value}));
-  }
-
-  async function onSubmit(e){
-    e.preventDefault();
-    if(!state.name || !state.email || !state.message){ const { showError } = await import('../utils/message'); showError('Please fill name, email and message'); return; }
-    setSubmitting(true);
-    try{
-      const res = await fetch('https://veloshift-backend.onrender.com/api/contact',{ method:'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ name: state.name, email: state.email, phone: state.phone, company: state.company, subject: `Website inquiry`, message: state.message }) });
-      if(!res.ok){ const data = await res.json().catch(()=>null); throw new Error(data?.error||'Failed to send'); }
-      const { showSuccess } = await import('../utils/message'); showSuccess('Message sent — we will contact you soon');
-      setState({ name:'', email:'', phone:'', company:'', message:'' });
-    }catch(err){ const { showError } = await import('../utils/message'); showError(err.message); }
-    setSubmitting(false);
-  }
-
-  return (
-    <form className="space-y-6 mt-6" onSubmit={onSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm font-medium">Your Name</label>
-          <input name="name" value={state.name} onChange={onChange} className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Email Address</label>
-          <input name="email" type="email" value={state.email} onChange={onChange} className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm font-medium">Phone Number</label>
-          <input name="phone" value={state.phone} onChange={onChange} className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">Company (Optional)</label>
-          <input name="company" value={state.company} onChange={onChange} className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
-        </div>
-      </div>
-
-      <div>
-        <label className="text-sm font-medium">Message</label>
-        <textarea name="message" value={state.message} onChange={onChange} rows={5} className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
-      </div>
-
-      <button type="submit" disabled={submitting} className="w-full mt-4 px-6 py-3 rounded-md text-lg font-semibold text-white bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]">
-        {submitting ? 'Sending...' : 'Send Message'}
-      </button>
-    </form>
-  )
 }

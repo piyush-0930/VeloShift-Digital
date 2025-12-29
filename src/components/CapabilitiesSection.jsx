@@ -1,42 +1,42 @@
 export default function CapabilitiesSection() {
   const capabilities = [
     {
-      title: "Engineering Design",
-      desc: "End-to-end 2D/3D CAD modeling, product detailing, and validation for industrial systems.",
+      title: "AI & Automation",
+      desc: "Build intelligent AI systems, automation workflows, chatbots, and ML-powered solutions that optimize business operations.",
       color: "#4FD1C5",
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1.7" viewBox="0 0 24 24">
-          <path d="M4 20l4-4h12V4H8L4 8v12zm4-10h1m4 0h7m-12 4h12" />
+          <path d="M12 2v4m0 12v4m4-12h4M4 12h4m1 2a3 3 0 106 0a3 3 0 00-6 0z" />
         </svg>
       )
     },
     {
-      title: "Automation",
-      desc: "Smart systems that enhance speed, precision, and safety across manufacturing and infrastructure projects.",
+      title: "Web & App Development",
+      desc: "Full-stack development for scalable web platforms, mobile apps, dashboards, and enterprise-grade digital products.",
       color: "#FF8B3D",
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1.7" viewBox="0 0 24 24">
-          <path d="M12 8V4m0 16v-4m4-4h4m-16 0h4m2 2a2 2 0 104 0a2 2 0 00-4 0z" />
+          <path d="M4 6h16v12H4zM4 10h16M9 14h6" />
         </svg>
       )
     },
     {
-      title: "BIM & Modelling",
-      desc: "Integrated digital design and project coordination for civil, electrical, and mechanical domains.",
+      title: "Cloud & DevOps",
+      desc: "Deploy, optimize, and manage cloud infrastructure with CI/CD, containers, monitoring, and industry-standard security.",
       color: "#38A7F0",
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1.7" viewBox="0 0 24 24">
-          <path d="M3 7l9-4l9 4l-9 4l-9-4zm0 5l9 4l9-4m-9-4v13" />
+          <path d="M3 15a4 4 0 014-4h1a5 5 0 019-2a4 4 0 012 7H7a4 4 0 01-4-1z" />
         </svg>
       )
     },
     {
-      title: "Digital Solutions",
-      desc: "Cloud, IoT, and data-driven applications for connected enterprises.",
+      title: "API Integrations",
+      desc: "Connect systems seamlessly using API development, third-party integrations, payment gateways, and custom connectors.",
       color: "#A855F7",
       icon: (
         <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1.7" viewBox="0 0 24 24">
-          <path d="M12 3v18m9-9H3m3-6l12 12m0-12L6 18" />
+          <path d="M4 12h16m-5-5l5 5l-5 5M9 7L4 12l5 5" />
         </svg>
       )
     }

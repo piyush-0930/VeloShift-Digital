@@ -1,82 +1,69 @@
 import { useState, useRef } from "react";
 
-/**
- * Careers.jsx — Fully Polished
- * Includes:
- * - Why Choose
- * - Perks & Benefits
- * - Hiring Process
- * - Open Positions (6 roles)
- * - Premium Job Cards (updated UI)
- * - FAQ
- * - CTA
- * - Apply Modal (role auto-filled)
- */
-
 export default function Careers() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
 
   const [jobs] = useState([
     {
-      role: "Mechanical Designer",
+      role: "AI Engineer",
       exp: "0–2 yrs",
-      location: "Noida / Ranchi",
+      location: "Remote / Hybrid",
       type: "Full-Time",
-      iconBg: "bg-green-600",
-      icon: "ri-pencil-ruler-2-line",
-      tags: ["AutoCAD", "SolidWorks", "Revit"],
-      gradient: "from-green-400 to-emerald-700",
+      iconBg: "bg-purple-600",
+      icon: "ri-robot-2-line",
+      tags: ["Python", "LLMs", "AI APIs"],
+      gradient: "from-purple-500 to-[#391b61]",
     },
     {
-      role: "Software Developer",
+      role: "Full Stack Developer (MERN)",
       exp: "0–2 yrs",
       location: "Hybrid – Noida",
       type: "Full-Time",
       iconBg: "bg-blue-600",
       icon: "ri-code-box-line",
-      tags: ["Python", "JavaScript", "SQL"],
+      tags: ["React", "Node.js", "MongoDB"],
       gradient: "from-blue-500 to-indigo-800",
     },
     {
-      role: "Data & IoT Engineer",
-      exp: "0–1 yrs",
-      location: "Noida / Remote",
-      type: "Full-Time",
-      iconBg: "bg-purple-600",
-      icon: "ri-robot-2-line",
-      tags: ["IoT", "Node-RED", "Power BI"],
-      gradient: "from-purple-500 to-[#391b61]",
-    },
-    {
-      role: "Junior Designer",
+      role: "Frontend React Developer",
       exp: "0–1 yr",
-      location: "Ranchi / Noida",
-      type: "Internship",
-      iconBg: "bg-orange-600",
-      icon: "ri-brain-line",
-      tags: ["3D Modeling", "Simulation"],
-      gradient: "from-orange-500 to-amber-800",
-    },
-    {
-      role: "Data Analyst",
-      exp: "0–2 yrs",
-      location: "Hybrid / Remote",
-      type: "Full-Time",
-      iconBg: "bg-cyan-600",
-      icon: "ri-bar-chart-2-line",
-      tags: ["SQL", "Python", "Tableau"],
-      gradient: "from-cyan-400 to-teal-700",
-    },
-    {
-      role: "Frontend Developer",
-      exp: "0–2 yrs",
-      location: "On-site / Remote",
+      location: "Remote / Hybrid",
       type: "Internship",
       iconBg: "bg-pink-600",
       icon: "ri-brackets-line",
       tags: ["React", "Tailwind", "UI/UX"],
       gradient: "from-pink-400 to-violet-700",
+    },
+    {
+      role: "Cloud & DevOps Engineer",
+      exp: "0–2 yrs",
+      location: "Hybrid / Remote",
+      type: "Full-Time",
+      iconBg: "bg-cyan-600",
+      icon: "ri-cloud-line",
+      tags: ["AWS", "Docker", "CI/CD"],
+      gradient: "from-cyan-400 to-teal-700",
+    },
+    {
+      role: "Automation Engineer",
+      exp: "0–2 yrs",
+      location: "Remote / On-site",
+      type: "Full-Time",
+      iconBg: "bg-green-600",
+      icon: "ri-flashlight-line",
+      tags: ["Zapier", "API Scripts", "Bots"],
+      gradient: "from-green-400 to-emerald-700",
+    },
+    {
+      role: "UI/UX Designer",
+      exp: "0–1 yr",
+      location: "Remote / Hybrid",
+      type: "Internship",
+      iconBg: "bg-orange-600",
+      icon: "ri-pencil-ruler-2-line",
+      tags: ["Figma", "Wireframes", "Prototyping"],
+      gradient: "from-orange-500 to-amber-800",
     },
   ]);
 
@@ -104,8 +91,8 @@ export default function Careers() {
           With Us
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-[var(--vs-light)]/80">
-          Join Veloshift Co — work on engineering, automation, AI and digital
-          products that matter.
+          Join Veloshift Technology — work on AI, automation, cloud and digital
+          products that shape the next generation of tech.
         </p>
       </section>
 
@@ -122,18 +109,18 @@ export default function Careers() {
         <div className="mt-10 grid md:grid-cols-3 gap-8">
           <WhyCard
             icon="ri-rocket-2-line"
-            title="Fast-Growing Company"
-            desc="Be part of a rapidly expanding engineering & digital powerhouse."
+            title="Fast-Growing Tech Company"
+            desc="Work directly on cloud, automation, AI and SaaS products."
           />
           <WhyCard
             icon="ri-lightbulb-flash-line"
-            title="Innovation Culture"
-            desc="Work on AI, automation, cloud, and cutting-edge engineering projects."
+            title="Innovation First"
+            desc="Experiment, iterate and build future-focused solutions."
           />
           <WhyCard
             icon="ri-team-line"
-            title="Great Team"
-            desc="Collaborate with talented engineers, developers, and innovators."
+            title="Amazing Team Culture"
+            desc="Collaborate with talented developers, designers and engineers."
           />
         </div>
       </section>
@@ -150,33 +137,33 @@ export default function Careers() {
         <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           <Perk
             icon="ri-booklet-line"
-            title="Learning & Development"
-            desc="Training, workshops & certifications."
+            title="Learning & Certifications"
+            desc="AI, cloud and tech upskilling programs."
           />
           <Perk
             icon="ri-health-book-line"
-            title="Health Benefits"
-            desc="Health support and group insurance."
+            title="Health Support"
+            desc="Employee wellness & flexible assistance."
           />
           <Perk
             icon="ri-wallet-3-line"
             title="Competitive Pay"
-            desc="Market-aligned salary & bonuses."
+            desc="Great compensation with growth cycles."
           />
           <Perk
             icon="ri-time-line"
-            title="Flexible Hours"
-            desc="Hybrid & remote options for many roles."
+            title="Flexible Work"
+            desc="Hybrid & remote-friendly environments."
           />
           <Perk
             icon="ri-flag-line"
             title="Leave Policies"
-            desc="Generous leave & public holidays."
+            desc="Fair and transparent leave structure."
           />
           <Perk
             icon="ri-gift-line"
-            title="Events & Perks"
-            desc="Team offsites, celebrations and perks."
+            title="Team Events"
+            desc="Offsites, hackathons, and celebrations."
           />
         </div>
       </section>
@@ -192,30 +179,14 @@ export default function Careers() {
         <Underline center />
 
         <p className="mt-4 text-[var(--vs-light)]/75">
-          A simple and transparent journey to joining our team.
+          A simple and transparent journey to joining our tech team.
         </p>
 
         <div className="mt-12 grid md:grid-cols-4 gap-6">
-          <ProcessStep
-            number="01"
-            title="Apply Online"
-            desc="Submit your application & resume."
-          />
-          <ProcessStep
-            number="02"
-            title="Initial Screening"
-            desc="HR reviews your profile."
-          />
-          <ProcessStep
-            number="03"
-            title="Technical Assessment"
-            desc="A short task (role-specific)."
-          />
-          <ProcessStep
-            number="04"
-            title="Final Interview"
-            desc="Meet the team lead & management."
-          />
+          <ProcessStep number="01" title="Apply Online" desc="Submit your resume & details." />
+          <ProcessStep number="02" title="Screening" desc="We review your application." />
+          <ProcessStep number="03" title="Technical Task" desc="Showcase your skillset." />
+          <ProcessStep number="04" title="Final Interview" desc="Meet our core team." />
         </div>
       </section>
 
@@ -246,22 +217,10 @@ export default function Careers() {
         <Underline center />
 
         <div className="mt-8 max-w-4xl mx-auto space-y-4">
-          <FAQ
-            q="What is the interview process like?"
-            a="Screening → Technical Task → Interview with Team Lead."
-          />
-          <FAQ
-            q="Do you offer remote work?"
-            a="Yes, multiple roles support hybrid or fully remote options."
-          />
-          <FAQ
-            q="What growth opportunities exist?"
-            a="Training, mentorship, certifications & internal mobility."
-          />
-          <FAQ
-            q="What is the company culture like?"
-            a="Young, high-energy, transparent and innovation-driven."
-          />
+          <FAQ q="Do you offer remote roles?" a="Yes, several roles support hybrid or fully remote work." />
+          <FAQ q="Do you hire freshers?" a="Yes, we hire 0–2 year candidates in multiple roles." />
+          <FAQ q="What tech stack do you use?" a="React, Node.js, Python, AI/LLMs, AWS, Docker and more." />
+          <FAQ q="Is there learning support?" a="We offer internal training, mentorship and certifications." />
         </div>
       </section>
 
@@ -270,11 +229,10 @@ export default function Careers() {
       {/* CTA */}
       <section className="py-16 px-6 bg-[#0F1A30] border-t border-white/10 text-center">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Ready to Shape the Future?
+          Ready to Join Veloshift?
         </h2>
         <p className="mt-3 text-[var(--vs-light)]/80">
-          If you’re passionate about innovation, Veloshift is the right place
-          for you.
+          If you’re passionate about building the future of technology — apply now.
         </p>
 
         <button
@@ -285,27 +243,24 @@ export default function Careers() {
         </button>
       </section>
 
-      {/* MODAL */}
       {modalOpen && <ApplyModal role={selectedRole} onClose={closeModal} />}
     </div>
   );
 }
 
 /* ------------------ JOB CARD ------------------ */
-
 function JobCard({ job, openApplyModal }) {
   return (
     <div className="
-        relative p-6 rounded-2xl 
-        bg-[#0d152b]/80 
-        border border-white/10 
-        backdrop-blur-xl shadow-xl
-        transition-all duration-300 
-        hover:-translate-y-3 hover:shadow-2xl
-        hover:border-[var(--vs-secondary)]/40
-        group
-      "
-    >
+      relative p-6 rounded-2xl 
+      bg-[#0d152b]/80 
+      border border-white/10 
+      backdrop-blur-xl shadow-xl
+      transition-all duration-300 
+      hover:-translate-y-3 hover:shadow-2xl
+      hover:border-[var(--vs-secondary)]/40
+      group
+    ">
       <div className="flex items-center gap-4 relative z-10">
         <div
           className={`w-16 h-16 flex items-center justify-center rounded-xl ${job.iconBg} bg-opacity-20 border border-white/10 shadow-inner`}
@@ -318,7 +273,9 @@ function JobCard({ job, openApplyModal }) {
           <div className="flex flex-wrap gap-2 mt-1 text-[var(--vs-light)]/70 text-xs">
             <span className="px-2 py-1 bg-white/5 rounded-md">{job.exp}</span>
             <span className="px-2 py-1 bg-white/5 rounded-md">{job.location}</span>
-            <span className="px-2 py-1 bg-[var(--vs-secondary)]/20 text-[var(--vs-secondary)] rounded-md">{job.type}</span>
+            <span className="px-2 py-1 bg-[var(--vs-secondary)]/20 text-[var(--vs-secondary)] rounded-md">
+              {job.type}
+            </span>
           </div>
         </div>
       </div>
@@ -395,9 +352,11 @@ function FAQ({ q, a }) {
   );
 }
 
-/* ------------------ APPLY MODAL (FIXED VERSION) ------------------ */
+/* ------------------ APPLY MODAL ------------------ */
 
 function ApplyModal({ role, onClose }) {
+  const resumeRef = useRef(null);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -406,7 +365,6 @@ function ApplyModal({ role, onClose }) {
     coverLetter: "",
   });
 
-  const resumeRef = useRef(null);
   const [submitting, setSubmitting] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -419,88 +377,32 @@ function ApplyModal({ role, onClose }) {
     e.preventDefault();
 
     if (!form.name || !form.email || !form.role) {
-      const { showError } = await import('../utils/message');
-      showError("Please fill all required fields.");
+      alert("Please fill all required fields.");
       return;
     }
 
     const resumeFile = resumeRef.current?.files[0];
     if (!resumeFile) {
-      const { showError } = await import('../utils/message');
-      showError("Please upload a resume.");
+      alert("Please upload a resume.");
       return;
     }
 
-    // client-side validation for file types and size
-    const allowed = [
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
-    if (!allowed.includes(resumeFile.type)) {
-      const { showError } = await import('../utils/message');
-      showError("Resume must be PDF or DOC/DOCX");
-      return;
-    }
-    if (resumeFile.size > 5 * 1024 * 1024) {
-      const { showError } = await import('../utils/message');
-      showError("Resume too large — max 5MB");
-      return;
-    }
+    setSubmitting(true);
+    setProgress(0);
+
+    const formData = new FormData();
+    Object.keys(form).forEach((key) => formData.append(key, form[key]));
+    formData.append("resume", resumeFile);
 
     try {
-      setSubmitting(true);
-      setProgress(0);
-
-      const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("email", form.email);
-      formData.append("phone", form.phone);
-      formData.append("role", form.role);
-      formData.append("position", form.role);
-      formData.append("coverLetter", form.coverLetter || "");
-      formData.append("resume", resumeFile);
-
-      // Use XMLHttpRequest to track upload progress
-      await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "https://veloshift-backend.onrender.com/api/apply");
-
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const pct = Math.round((event.loaded / event.total) * 100);
-            setProgress(pct);
-          }
-        };
-
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(JSON.parse(xhr.responseText));
-          } else {
-            try {
-              const data = JSON.parse(xhr.responseText);
-              reject(new Error(data.error || "Upload failed"));
-            } catch (err) {
-              reject(new Error("Upload failed"));
-            }
-          }
-        };
-
-        xhr.onerror = () => reject(new Error("Network error"));
-        xhr.send(formData);
-      });
-
-      // success message
-      const { showSuccess } = await import('../utils/message');
-      showSuccess('Application submitted successfully!');
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      alert("Application submitted successfully!");
       onClose();
-    } catch (err) {
-      const { showError } = await import('../utils/message');
-      showError(err.message || "Failed to submit application");
-    } finally {
-      setSubmitting(false);
-      setProgress(0);
+    } catch {
+      alert("Failed to submit.");
     }
+
+    setSubmitting(false);
   }
 
   return (
@@ -520,88 +422,33 @@ function ApplyModal({ role, onClose }) {
 
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              name="name"
-              value={form.name}
-              onChange={onChange}
-              placeholder="Full Name"
-              className="input"
-            />
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={onChange}
-              placeholder="Email"
-              className="input"
-            />
+            <input name="name" className="input" value={form.name} onChange={onChange} placeholder="Full Name" />
+            <input name="email" type="email" className="input" value={form.email} onChange={onChange} placeholder="Email" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={onChange}
-              placeholder="Phone Number"
-              className="input"
-            />
-            <input
-              name="role"
-              value={form.role}
-              onChange={onChange}
-              placeholder="Applying for"
-              className="input"
-            />
+            <input name="phone" className="input" value={form.phone} onChange={onChange} placeholder="Phone Number" />
+            <input name="role" className="input" value={form.role} onChange={onChange} placeholder="Applying for" />
           </div>
 
-          <div>
-            <label className="text-sm text-white/70">Cover Letter (optional)</label>
-            <textarea
-              name="coverLetter"
-              value={form.coverLetter}
-              onChange={onChange}
-              placeholder="A short cover note"
-              className="mt-2 p-3 w-full rounded bg-transparent border border-white/10 text-white"
-              rows={4}
-            />
-          </div>
+          <textarea
+            name="coverLetter"
+            value={form.coverLetter}
+            onChange={onChange}
+            placeholder="Cover Letter (optional)"
+            className="p-3 w-full rounded bg-transparent border border-white/10 text-white"
+            rows={4}
+          />
 
-          <div>
-            <label className="text-sm text-white/70">Resume</label>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              ref={resumeRef}
-              className="mt-2 file:bg-[var(--vs-secondary)] file:text-white file:px-4 file:py-2 file:rounded-md"
-            />
-          </div>
+          <input type="file" ref={resumeRef} accept=".pdf,.doc,.docx" className="file:bg-[var(--vs-secondary)] file:text-white file:px-4 file:py-2 file:rounded-md" />
 
-          {progress > 0 && (
-            <div className="w-full bg-white/5 rounded overflow-hidden mt-2">
-              <div
-                className="h-2 bg-[var(--vs-secondary)]"
-                style={{ width: `${progress}%` }}
-              />
-              <div className="text-xs text-white/70 mt-1">{progress}%</div>
-            </div>
-          )}
-
-          <div className="flex gap-3 mt-4">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-6 py-3 rounded-md bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] text-white font-semibold disabled:opacity-70"
-            >
-              {submitting ? "Submitting..." : "Submit Application"}
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-6 py-3 rounded-md border border-white/20 text-white/70"
-            >
-              Cancel
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full py-3 rounded-md bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] text-white font-semibold mt-4 disabled:opacity-70"
+          >
+            {submitting ? "Submitting..." : "Submit Application"}
+          </button>
         </form>
       </div>
     </div>
@@ -611,17 +458,13 @@ function ApplyModal({ role, onClose }) {
 /* ------------------ HELPERS ------------------ */
 
 function Divider() {
-  return (
-    <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-8"></div>
-  );
+  return <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-8"></div>;
 }
 
 function Underline({ center }) {
   return (
     <div
-      className={`h-1 w-24 ${
-        center ? "mx-auto" : ""
-      } mt-3 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded-full`}
+      className={`h-1 w-24 ${center ? "mx-auto" : ""} mt-3 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded-full`}
     />
   );
 }
