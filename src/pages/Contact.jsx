@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { post } from "../utils/api";
 
 export default function Contact() {
   return (
     <div className="w-full bg-[var(--vs-bg)] text-[var(--vs-light)]">
 
-      {/* ================================
-          CONTACT HERO
-      ================================= */}
+      {/* CONTACT HERO */}
       <section className="w-full pt-20 pb-10 text-center px-6">
         <h1 className="text-4xl md:text-6xl font-extrabold text-white">
           Get in{" "}
@@ -24,9 +23,7 @@ export default function Contact() {
 
       <Divider />
 
-      {/* ================================
-          SUPPORT CHANNELS
-      ================================= */}
+      {/* SUPPORT CHANNELS */}
       <section className="py-12 px-6 max-w-6xl mx-auto text-center animate-fade-in">
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
           Support <span className="text-[var(--vs-secondary)]">Channels</span>
@@ -71,20 +68,16 @@ export default function Contact() {
 
       <Divider />
 
-      {/* ================================
-          CONTACT DETAILS + FORM
-      ================================= */}
+      {/* CONTACT DETAILS + FORM */}
       <section className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
-
-        {/* LEFT SIDE — CONTACT DETAILS */}
+        
+        {/* LEFT SIDE */}
         <div className="space-y-10">
-
           <div className="bg-[#0F1A30] border border-white/10 rounded-2xl p-10">
             <h2 className="text-2xl font-bold text-white">Contact Information</h2>
             <Underline />
 
             <div className="space-y-6 mt-6 text-[var(--vs-light)]/90">
-
               <div className="flex items-start gap-4">
                 <i className="ri-mail-line text-[var(--vs-secondary)] text-2xl"></i>
                 <div>
@@ -110,7 +103,6 @@ export default function Contact() {
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -126,10 +118,9 @@ export default function Contact() {
               className="rounded-2xl"
             ></iframe>
           </div>
-
         </div>
 
-        {/* RIGHT SIDE — CONTACT FORM */}
+        {/* RIGHT — FORM */}
         <div className="bg-[#0F1A30] border border-white/10 rounded-2xl p-10 shadow-lg">
           <h2 className="text-2xl font-bold text-white">Send Us a Message</h2>
           <Underline />
@@ -143,10 +134,7 @@ export default function Contact() {
   );
 }
 
-/* =====================================
-   CONTACT FORM COMPONENT
-===================================== */
-
+/* CONTACT FORM WITH BACKEND + INLINE MESSAGE + AUTO-HIDE */
 function ContactForm() {
   const [state, setState] = useState({
     name: "",
@@ -155,50 +143,54 @@ function ContactForm() {
     company: "",
     message: "",
   });
+
   const [submitting, setSubmitting] = useState(false);
+
+  const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState("success"); // success | error
 
   function onChange(e) {
     const { name, value } = e.target;
     setState((s) => ({ ...s, [name]: value }));
   }
 
+  function showInlineMessage(text, type = "success") {
+    setMsg(text);
+    setMsgType(type);
+
+    setTimeout(() => setMsg(""), 4000); // auto-hide after 4 sec
+  }
+
   async function onSubmit(e) {
     e.preventDefault();
 
     if (!state.name || !state.email || !state.message) {
-      const { showError } = await import("../utils/message");
-      showError("Please fill name, email and message");
+      showInlineMessage("Please fill all required fields.", "error");
       return;
     }
 
     setSubmitting(true);
 
     try {
-      const res = await fetch("https://veloshift-backend.onrender.com/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: state.name,
-          email: state.email,
-          phone: state.phone,
-          company: state.company,
-          subject: "Website inquiry",
-          message: state.message,
-        }),
-      });
+      const data = await post("/api/contact/submit", state);
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.error || "Failed to send");
+      if (data.success) {
+        showInlineMessage("Thank you! Our team will contact you shortly.", "success");
+
+        setState({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          message: "",
+        });
+      } else {
+        showInlineMessage("Could not send your message. Please try again.", "error");
       }
 
-      const { showSuccess } = await import("../utils/message");
-      showSuccess("Message sent — we will contact you soon");
-
-      setState({ name: "", email: "", phone: "", company: "", message: "" });
     } catch (err) {
-      const { showError } = await import("../utils/message");
-      showError(err.message);
+      console.log("Error submitting:", err);
+      showInlineMessage("Something went wrong. Please try again later.", "error");
     }
 
     setSubmitting(false);
@@ -206,6 +198,7 @@ function ContactForm() {
 
   return (
     <form className="space-y-6 mt-6" onSubmit={onSubmit}>
+      
       {/* NAME + EMAIL */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -264,11 +257,22 @@ function ContactForm() {
           name="message"
           value={state.message}
           onChange={onChange}
-          placeholder="Write your message here..."
+          placeholder="Write your memory here..."
           rows={5}
           className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
         />
       </div>
+
+      {/* INLINE MESSAGE */}
+      {msg && (
+        <p
+          className={`text-sm font-medium ${
+            msgType === "success" ? "text-green-400" : "text-red-400"
+          }`}
+        >
+          {msg}
+        </p>
+      )}
 
       {/* BUTTON */}
       <button
@@ -282,14 +286,11 @@ function ContactForm() {
   );
 }
 
-/* =====================================
-   SMALL COMPONENTS
-===================================== */
-
+/* SMALL COMPONENTS */
 function Divider() {
   return (
     <div className="h-[1px] w-full bg-gradient-to-r 
-    from-transparent via-white/10 to-transparent my-8"></div>
+    from-transparent via-white/10 to-transparent আমার-৮"></div>
   );
 }
 
@@ -297,7 +298,7 @@ function Underline({ center = false }) {
   return (
     <div
       className={`h-1 w-20 ${center ? "mx-auto" : ""} mt-3 
-      bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded-full`}
+      bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded товаров`}
     ></div>
   );
 }

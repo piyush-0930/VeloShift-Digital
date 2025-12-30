@@ -395,7 +395,18 @@ function ApplyModal({ role, onClose }) {
     formData.append("resume", resumeFile);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const response = await fetch("https://veloshift-backend.onrender.com/api/apply", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.error || "Failed to submit.");
+        return;
+      }
+
       alert("Application submitted successfully!");
       onClose();
     } catch {
@@ -440,7 +451,12 @@ function ApplyModal({ role, onClose }) {
             rows={4}
           />
 
-          <input type="file" ref={resumeRef} accept=".pdf,.doc,.docx" className="file:bg-[var(--vs-secondary)] file:text-white file:px-4 file:py-2 file:rounded-md" />
+          <input
+            type="file"
+            ref={resumeRef}
+            accept=".pdf,.doc,.docx"
+            className="file:bg-[var(--vs-secondary)] file:text-white file:px-4 file:py-2 file:rounded-md"
+          />
 
           <button
             type="submit"
