@@ -5,7 +5,7 @@ export default function Contact() {
   return (
     <div className="w-full bg-[var(--vs-bg)] text-[var(--vs-light)]">
 
-      {/* CONTACT HERO */}
+      {/* HERO */}
       <section className="w-full pt-20 pb-10 text-center px-6">
         <h1 className="text-4xl md:text-6xl font-extrabold text-white">
           Get in{" "}
@@ -13,119 +13,48 @@ export default function Contact() {
             Touch
           </span>
         </h1>
-
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-[var(--vs-light)]/80 leading-relaxed">
-          Whether you need engineering expertise, AI solutions, automation,
-          or digital transformation — Veloshift Co is here to help bring
-          your vision to life.
-        </p>
       </section>
 
       <Divider />
 
-      {/* SUPPORT CHANNELS */}
-      <section className="py-12 px-6 max-w-6xl mx-auto text-center animate-fade-in">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Support <span className="text-[var(--vs-secondary)]">Channels</span>
-        </h2>
-
-        <Underline center />
-
-        <p className="mt-4 text-[var(--vs-light)]/75 max-w-2xl mx-auto">
-          We're here to help you in every way possible.
-        </p>
-
-        <div className="mt-12 grid md:grid-cols-3 gap-10">
-          {[
-            {
-              title: "Technical Support",
-              desc: "For help with ongoing projects or technical issues.",
-              icon: "ri-cpu-line",
-            },
-            {
-              title: "Sales Inquiries",
-              desc: "For questions about our services or partnerships.",
-              icon: "ri-money-rupee-circle-line",
-            },
-            {
-              title: "General Questions",
-              desc: "Response within 24 business hours.",
-              icon: "ri-question-answer-line",
-            },
-          ].map((s, i) => (
-            <div
-              key={i}
-              className="bg-[#0F1A30]/50 border border-white/10 rounded-2xl p-8 backdrop-blur-xl 
-                         hover:scale-[1.03] transition-all shadow-lg"
-            >
-              <i className={`${s.icon} text-[var(--vs-secondary)] text-4xl`}></i>
-              <h3 className="text-xl font-bold text-white mt-4">{s.title}</h3>
-              <p className="text-[var(--vs-light)]/75 mt-2">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <Divider />
-
-      {/* CONTACT DETAILS + FORM */}
-      <section className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
+      {/* MAIN */}
+      <section className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-stretch">
         
-        {/* LEFT SIDE */}
-        <div className="space-y-10">
-          <div className="bg-[#0F1A30] border border-white/10 rounded-2xl p-10">
-            <h2 className="text-2xl font-bold text-white">Contact Information</h2>
-            <Underline />
+        {/* LEFT */}
+        <div className="flex flex-col gap-6 h-full">
 
-            <div className="space-y-6 mt-6 text-[var(--vs-light)]/90">
-              <div className="flex items-start gap-4">
-                <i className="ri-mail-line text-[var(--vs-secondary)] text-2xl"></i>
-                <div>
-                  <p className="font-medium">Email</p>
-                  <p className="opacity-80">business.veloshift@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <i className="ri-phone-line text-[var(--vs-secondary)] text-2xl"></i>
-                <div>
-                  <p className="font-medium">Phone</p>
-                  <p className="opacity-80">+91 95186-18418</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <i className="ri-map-pin-line text-[var(--vs-secondary)] text-2xl"></i>
-                <div>
-                  <p className="font-medium">Office Address</p>
-                  <p className="opacity-80">
-                    Chandigarh University, Mohali, India
-                  </p>
-                </div>
-              </div>
-            </div>
+          {/* 2x2 CONTACT CARDS */}
+          <div className="grid grid-cols-2 gap-4">
+            <InfoCard icon="ri-mail-line" title="Email" value="business.veloshift@gmail.com" />
+            <InfoCard icon="ri-phone-line" title="Phone" value="+91 95186-18418" />
+            <InfoCard icon="ri-whatsapp-line" title="WhatsApp" value="+91 89011-27336" />
+            <InfoCard icon="ri-map-pin-line" title="Location" value="CU-TBI, Mohali" />
           </div>
 
           {/* MAP */}
-          <div className="bg-[#0F1A30] border border-white/10 rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-[#0F1A30] border border-white/10 rounded-2xl overflow-hidden flex-1">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1714.1031260403613!2d76.5729900983948!3d30.768790200000016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ffb140bd63e07%3A0x68591e334d17a988!2sChandigarh%20University!5e0!3m2!1sen!2sin!4v1764696811565!5m2!1sen!2sin"
-              width="100%"
-              height="400"
+              className="w-full h-full min-h-[320px]"
               loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-2xl"
             ></iframe>
           </div>
+
         </div>
 
-        {/* RIGHT — FORM */}
-        <div className="bg-[#0F1A30] border border-white/10 rounded-2xl p-10 shadow-lg">
-          <h2 className="text-2xl font-bold text-white">Send Us a Message</h2>
-          <Underline />
+        {/* RIGHT FORM */}
+        <div className="bg-[#0F1A30] border border-white/10 rounded-2xl p-10 shadow-lg flex flex-col">
+          
+          <div>
+            <h2 className="text-2xl font-bold text-white">Send Message</h2>
+            <Underline />
+            <p className="text-sm text-[var(--vs-light)]/70 mt-2">
+              Fill the form and our team will get back to you quickly.
+            </p>
+          </div>
 
           <ContactForm />
+
         </div>
 
       </section>
@@ -134,7 +63,38 @@ export default function Contact() {
   );
 }
 
-/* CONTACT FORM WITH BACKEND + INLINE MESSAGE + AUTO-HIDE */
+/* 🔥 PREMIUM INFO CARD */
+function InfoCard({ icon, title, value }) {
+  return (
+    <div className="relative overflow-hidden bg-[#0F1A30]/70 border border-white/10 
+                    rounded-xl p-5 transition-all duration-300 
+                    hover:scale-[1.04] hover:border-[var(--vs-secondary)]/40 group">
+
+      {/* BIG CURVED GLOW */}
+      <div className="absolute -top-12 -right-12 w-40 h-40 
+                      bg-gradient-to-br from-[var(--vs-secondary)]/20 to-transparent 
+                      rounded-full blur-xl group-hover:scale-110 transition"></div>
+
+      {/* SHARP CORNER SHAPE */}
+      <div className="absolute top-0 right-0 w-20 h-20 
+                      bg-gradient-to-bl from-[var(--vs-secondary)]/30 to-transparent 
+                      rounded-bl-[60px]"></div>
+
+      {/* HEADER */}
+      <div className="flex items-center gap-3 relative z-10">
+        <i className={`${icon} text-[var(--vs-secondary)] text-xl`}></i>
+        <p className="text-white font-medium">{title}</p>
+      </div>
+
+      {/* VALUE */}
+      <p className="text-sm text-[var(--vs-light)]/70 mt-3 relative z-10">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+/* FORM */
 function ContactForm() {
   const [state, setState] = useState({
     name: "",
@@ -144,161 +104,83 @@ function ContactForm() {
     message: "",
   });
 
+  const [msg, setMsg] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const [msg, setMsg] = useState("");
-  const [msgType, setMsgType] = useState("success"); // success | error
-
   function onChange(e) {
-    const { name, value } = e.target;
-    setState((s) => ({ ...s, [name]: value }));
-  }
-
-  function showInlineMessage(text, type = "success") {
-    setMsg(text);
-    setMsgType(type);
-
-    setTimeout(() => setMsg(""), 4000); // auto-hide after 4 sec
+    setState({ ...state, [e.target.name]: e.target.value });
   }
 
   async function onSubmit(e) {
     e.preventDefault();
 
     if (!state.name || !state.email || !state.message) {
-      showInlineMessage("Please fill all required fields.", "error");
+      setMsg("Please fill required fields");
       return;
     }
 
     setSubmitting(true);
 
     try {
-      const data = await post("/api/contact/submit", state);
-
-      if (data.success) {
-        showInlineMessage("Thank you! Our team will contact you shortly.", "success");
-
-        setState({
-          name: "",
-          email: "",
-          phone: "",
-          company: "",
-          message: "",
-        });
-      } else {
-        showInlineMessage("Could not send your message. Please try again.", "error");
-      }
-
-    } catch (err) {
-      console.log("Error submitting:", err);
-      showInlineMessage("Something went wrong. Please try again later.", "error");
+      await post("/api/contact/submit", state);
+      setMsg("Message sent successfully!");
+      setState({ name: "", email: "", phone: "", company: "", message: "" });
+    } catch {
+      setMsg("Something went wrong");
     }
 
     setSubmitting(false);
   }
 
   return (
-    <form className="space-y-6 mt-6" onSubmit={onSubmit}>
-      
-      {/* NAME + EMAIL */}
+    <form onSubmit={onSubmit} className="space-y-5 mt-6 flex-1 flex flex-col justify-between">
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm font-medium">Your Name</label>
-          <input
-            name="name"
-            value={state.name}
-            onChange={onChange}
-            placeholder="Full Name"
-            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
-          />
-        </div>
+        <input name="name" value={state.name} onChange={onChange}
+          placeholder="Full Name"
+          className="px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
 
-        <div>
-          <label className="text-sm font-medium">Email Address</label>
-          <input
-            name="email"
-            type="email"
-            value={state.email}
-            onChange={onChange}
-            placeholder="Email Address"
-            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
-          />
-        </div>
+        <input name="email" value={state.email} onChange={onChange}
+          placeholder="Email"
+          className="px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
       </div>
 
-      {/* PHONE + COMPANY */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="text-sm font-medium">Phone Number</label>
-          <input
-            name="phone"
-            value={state.phone}
-            onChange={onChange}
-            placeholder="Phone Number"
-            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
-          />
-        </div>
+        <input name="phone" value={state.phone} onChange={onChange}
+          placeholder="Phone"
+          className="px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
 
-        <div>
-          <label className="text-sm font-medium">Company (Optional)</label>
-          <input
-            name="company"
-            value={state.company}
-            onChange={onChange}
-            placeholder="Your Company"
-            className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
-          />
-        </div>
+        <input name="company" value={state.company} onChange={onChange}
+          placeholder="Company"
+          className="px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white" />
       </div>
 
-      {/* MESSAGE */}
-      <div>
-        <label className="text-sm font-medium">Message</label>
-        <textarea
-          name="message"
-          value={state.message}
-          onChange={onChange}
-          placeholder="Write your memory here..."
-          rows={5}
-          className="w-full mt-2 px-4 py-3 bg-[#121b36] border border-white/10 rounded-md text-white"
-        />
-      </div>
+      <textarea name="message" value={state.message} onChange={onChange}
+        placeholder="Your message..."
+        rows={5}
+        className="px-4 py-3 bg-[#121b36] border border-white/10 rounded-md w-full text-white" />
 
-      {/* INLINE MESSAGE */}
-      {msg && (
-        <p
-          className={`text-sm font-medium ${
-            msgType === "success" ? "text-green-400" : "text-red-400"
-          }`}
-        >
-          {msg}
-        </p>
-      )}
+      {msg && <p className="text-sm text-green-400">{msg}</p>}
 
-      {/* BUTTON */}
       <button
-        type="submit"
         disabled={submitting}
-        className="w-full mt-4 px-6 py-3 rounded-md text-lg font-semibold text-white bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]"
+        className="w-full py-3 rounded-md bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] font-semibold text-white"
       >
         {submitting ? "Sending..." : "Send Message"}
       </button>
+
     </form>
   );
 }
 
-/* SMALL COMPONENTS */
+/* UI */
 function Divider() {
-  return (
-    <div className="h-[1px] w-full bg-gradient-to-r 
-    from-transparent via-white/10 to-transparent আমার-৮"></div>
-  );
+  return <div className="h-[1px] w-full bg-white/10"></div>;
 }
 
 function Underline({ center = false }) {
   return (
-    <div
-      className={`h-1 w-20 ${center ? "mx-auto" : ""} mt-3 
-      bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded товаров`}
-    ></div>
+    <div className={`h-1 w-16 mt-2 ${center ? "mx-auto" : ""} 
+    bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded`} />
   );
 }

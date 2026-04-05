@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="w-full bg-[#060D1E] border-t border-white/10 pt-16 pb-10 text-[var(--vs-light)]">
 
-      {/* TOP FOOTER GRID */}
+      {/* GRID */}
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
 
         {/* LOGO + ABOUT */}
@@ -16,61 +16,54 @@ export default function Footer() {
           </h2>
 
           <p className="mt-5 text-[var(--vs-light)]/70 leading-relaxed">
-            Empowering businesses with intelligent AI systems, scalable web & app 
-            development, cloud architecture, and automation-driven digital solutions.
+            Building scalable, high-performance digital products with AI, cloud infrastructure,
+            and modern web technologies for startups and enterprises worldwide.
           </p>
-
-          {/* SOCIAL ICONS */}
-          <div className="flex items-center gap-4 mt-6">
-            {["facebook", "twitter", "linkedin", "github"].map((icon) => (
-              <a
-                key={icon}
-                href="#"
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition text-[var(--vs-light)]"
-              >
-                <i className={`ri-${icon}-fill text-xl`}></i>
-              </a>
-            ))}
-          </div>
         </div>
 
-        {/* QUICK LINKS */}
+        {/* COMPANY */}
         <div>
-          <h3 className="text-xl font-semibold text-white mb-4">Quick Links</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">Company</h3>
           <ul className="space-y-3 text-[var(--vs-light)]/80">
-            <li><Link to="/" className="hover:text-[var(--vs-secondary)] transition">Home</Link></li>
-            <li><Link to="/about" className="hover:text-[var(--vs-secondary)] transition">About</Link></li>
-            <li><Link to="/services" className="hover:text-[var(--vs-secondary)] transition">Services</Link></li>
-            <li><Link to="/industries" className="hover:text-[var(--vs-secondary)] transition">Industries</Link></li>
+            <li><Link to="/" className="hover:text-[var(--vs-secondary)]">Home</Link></li>
+            <li><Link to="/about" className="hover:text-[var(--vs-secondary)]">About</Link></li>
+            <li><Link to="/services" className="hover:text-[var(--vs-secondary)]">Services</Link></li>
+            <li><Link to="/portfolio" className="hover:text-[var(--vs-secondary)]">Portfolio</Link></li>
+            <li><Link to="/careers" className="hover:text-[var(--vs-secondary)]">Careers</Link></li>
           </ul>
         </div>
 
-        {/* SERVICES UPDATED */}
+        {/* SOLUTIONS */}
         <div>
-          <h3 className="text-xl font-semibold text-white mb-4">Services</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">Solutions</h3>
           <ul className="space-y-3 text-[var(--vs-light)]/80">
-            <li>AI & Automation</li>
-            <li>Web & App Development</li>
-            <li>Cloud & DevOps</li>
-            <li>API Integrations</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">Development</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">AI & Automation</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">Cloud Services</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">Tech Integrations</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">Design & Consulting</li>
           </ul>
         </div>
 
-        {/* CONTACT */}
+        {/* 🔥 PROJECTS / LABS */}
         <div>
-          <h3 className="text-xl font-semibold text-white mb-4">Contact</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">Labs & Projects</h3>
+
           <ul className="space-y-3 text-[var(--vs-light)]/80">
-            <li>Email: business.veloshift@gmail.com</li>
-            <li>Phone: +91 95186-18418</li>
-            <li>Office: CU-TBI, Mohali</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">VX Labs (AI Research)</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">ONTC (Cloud Infra Tools)</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">NeuroFlow (ML Platform)</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">StackForge (Dev Tools)</li>
+            <li className="hover:text-[var(--vs-secondary)] cursor-pointer">AutoSync (Automation Suite)</li>
           </ul>
         </div>
+
       </div>
 
-      {/* BOTTOM BAR */}
-      <div className="border-t border-white/10 mt-12 pt-5 text-center text-[var(--vs-light)]/60">
-        © {new Date().getFullYear()} <span className="text-white">VeloShift Co. </span> 
-        All rights reserved.
+      {/* BOTTOM */}
+      <div className="border-t border-white/10 mt-12 pt-5 text-center text-[var(--vs-light)]/60 text-sm">
+        © {new Date().getFullYear()}{" "}
+        <span className="text-white font-medium">VeloShift Co.</span> All rights reserved.
       </div>
     </footer>
   );

@@ -1,133 +1,208 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { ChevronDown, Plus } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [mobileDropdown, setMobileDropdown] = useState(null);
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Industries", path: "/industries" },
+    {
+      name: "About",
+      dropdown: [
+        { name: "Company Overview", path: "/about" },
+        { name: "Certifications", path: "/certifications" },
+        { name: "E-Brochure", path: "/brochure.pdf", download: true },
+      ],
+    },
+    {
+      name: "Services",
+      mega: true,
+      sections: [
+        {
+          title: "Development",
+          items: ["Web Development", "Mobile App Development", "Software Development", "Custom Solutions"],
+        },
+        {
+          title: "AI & Automation",
+          items: ["AI Chatbots", "Workflow Automation", "Machine Learning", "Predictive Analytics"],
+        },
+        {
+          title: "Cloud Services",
+          items: ["Cloud Deployment", "DevOps", "AWS / Azure / GCP", "Cloud Migration"],
+        },
+        {
+          title: "Tech Integrations",
+          items: ["API Integration", "CRM Integration", "Payment Gateways", "Automation"],
+        },
+        {
+          title: "Design & Consulting",
+          items: ["UI/UX Design", "IT Consulting", "Branding", "Support"],
+        },
+      ],
+    },
+    { name: "Portfolio", path: "/portfolio" },
     { name: "Careers", path: "/careers" },
     { name: "Contact", path: "/contact" },
-    // Admin removed from navbar for security — login directly when needed
   ];
 
   return (
-    <nav className="sticky top-0 w-full z-50 bg-[#0B142B] border-b border-white/5">
+    <nav className="w-full bg-[#0B142B] border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="font-bold text-xl text-white select-none">
-          <span className="px-5 py-2 bg-gradient-to-r from-[#1E7BCE] to-[#38A7F0] shadow-sm">
+        <Link to="/" className="text-white font-bold text-xl">
+          <span className="px-5 py-2 bg-gradient-to-r from-[#1E7BCE] to-[#38A7F0]">
             VeloShift Co
           </span>
         </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-10 font-medium text-white">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `transition ${
-                  isActive ? "text-[#38A7F0]" : "hover:text-[#38A7F0]"
-                }`
-              }
-            >
-              {item.name}
-            </NavLink>
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-10 text-white font-medium">
+          {navItems.map((item, i) => (
+            <div key={i} className="relative group">
+              <div className="py-2 flex items-center gap-1 cursor-pointer hover:text-[#38A7F0]">
+                {item.path ? (
+                  <NavLink to={item.path}>{item.name}</NavLink>
+                ) : (
+                  <>
+                    {item.name}
+                    <ChevronDown size={16} />
+                  </>
+                )}
+              </div>
+
+              {/* Dropdown */}
+              {item.dropdown && (
+                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                  <div className="bg-[#1a2540] rounded-lg shadow-lg w-56 py-2">
+                    {item.dropdown.map((sub, idx) => (
+                      sub.download ? (
+                        <a
+                          key={idx}
+                          href={sub.path}
+                          download
+                          className="block px-5 py-3 text-sm hover:bg-[#24345a]"
+                        >
+                          {sub.name}
+                        </a>
+                      ) : (
+                        <Link
+                          key={idx}
+                          to={sub.path}
+                          className="block px-5 py-3 text-sm hover:bg-[#24345a]"
+                        >
+                          {sub.name}
+                        </Link>
+                      )
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Mega Menu */}
+              {item.mega && (
+                <div className="absolute left-1/2 -translate-x-[60%] top-full pt-4 w-[1000px] max-w-[95vw] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                  <div className="px-4">
+                    <div className="bg-[#1a2540]/95 backdrop-blur-md rounded-xl shadow-2xl p-8 border border-white/5">
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
+                        {item.sections.map((section, idx) => (
+                          <div key={idx} className="bg-[#223056] p-5 rounded-xl hover:bg-[#283a66] transition-all duration-300 shadow-md hover:shadow-xl border border-white/5 hover:-translate-y-1">
+                            <h4 className="text-[#38A7F0] font-semibold mb-2 text-xs uppercase tracking-wider">
+                              {section.title}
+                            </h4>
+                            <div className="w-6 h-[2px] bg-[#38A7F0] mb-3"></div>
+                            <ul className="space-y-3">
+                              {section.items.map((sub, i) => (
+                                <li key={i} className="flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-200 cursor-pointer text-sm group hover:translate-x-1">
+                                  <span className="w-2 h-2 bg-gradient-to-r from-[#38A7F0] to-[#1E7BCE] rounded-full"></span>
+                                  {sub}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
         {/* Mobile Toggle */}
-        <button className="md:hidden text-white" onClick={() => setOpen(!open)}>
-          {open ? (
-            // SIMPLE CROSS ICON — NO ROTATION
-            <svg
-              className="w-7 h-7"
-              fill="none"
-              stroke="white"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="3"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            // HAMBURGER ICON
-            <svg
-              className="w-7 h-7"
-              fill="none"
-              stroke="white"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="3"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
+        <button className="md:hidden text-white text-2xl" onClick={() => setOpen(!open)}>
+          {open ? "✕" : "☰"}
         </button>
       </div>
 
-      {/* Right Slide Drawer */}
-      <div
-        className={`fixed top-0 right-0 h-full w-64 bg-[#0B142B] shadow-xl md:hidden
-          transform transition-transform duration-300 z-[100]
-          ${open ? "translate-x-0" : "translate-x-full"}`}
-      >
+      {/* Mobile Drawer */}
+      <div className={`fixed top-0 right-0 h-full w-full bg-[#0B142B] z-[60] transform ${open ? "translate-x-0" : "translate-x-full"} transition duration-300`}>
+        <div className="p-6 text-white">
+          <div className="flex justify-end mb-8">
+            <button onClick={() => setOpen(false)} className="text-2xl">✕</button>
+          </div>
 
-        {/* Close button inside drawer */}
-        <button
-          onClick={() => setOpen(false)}
-          className="absolute top-6 right-6 text-white"
-        >
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="white"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="3"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+          <div className="space-y-6">
+            {navItems.map((item, i) => (
+              <div key={i} className="border-b border-white/10 pb-4">
+                <div
+                  onClick={() =>
+                    item.dropdown || item.mega
+                      ? setMobileDropdown(mobileDropdown === i ? null : i)
+                      : setOpen(false)
+                  }
+                  className="flex justify-between items-center text-lg font-medium cursor-pointer"
+                >
+                  <span>{item.name}</span>
+                  {(item.dropdown || item.mega) && <Plus size={20} />}
+                </div>
 
-        <div className="flex flex-col space-y-8 px-6 pt-24 text-white text-lg font-medium">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                `${isActive ? "text-[#38A7F0]" : "text-white"} transition`
-              }
-            >
-              {item.name}
-            </NavLink>
-          ))}
+                {mobileDropdown === i && (
+                  <div className="mt-4 pl-2 space-y-4 text-gray-300 text-sm">
+                    {item.dropdown &&
+                      item.dropdown.map((sub, idx) => (
+                        sub.download ? (
+                          <a
+                            key={idx}
+                            href={sub.path}
+                            download
+                            className="block hover:text-white"
+                            onClick={() => setOpen(false)}
+                          >
+                            {sub.name}
+                          </a>
+                        ) : (
+                          <Link
+                            key={idx}
+                            to={sub.path}
+                            className="block hover:text-white"
+                            onClick={() => setOpen(false)}
+                          >
+                            {sub.name}
+                          </Link>
+                        )
+                      ))}
+                    {item.mega &&
+                      item.sections.map((sec, idx) => (
+                        <div key={idx}>
+                          <p className="text-[#38A7F0] font-semibold mb-2">{sec.title}</p>
+                          <div className="space-y-2 pl-2">
+                            {sec.items.map((s, j) => (
+                              <p key={j} className="hover:text-white cursor-pointer">{s}</p>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Transparent Backdrop */}
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-transparent md:hidden z-[50]"
-        />
-      )}
     </nav>
   );
 }

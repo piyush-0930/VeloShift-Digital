@@ -1,138 +1,171 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { get, del } from "../utils/api";
+import { FaUsers, FaBriefcase, FaCogs } from "react-icons/fa";
+import { get } from "../utils/api";
 
-function Tabs({ active, setActive }) {
-  const tabs = ["contacts"];
-  return (
-    <div className="flex gap-3">
-      {tabs.map((t) => (
-        <button
-          key={t}
-          onClick={() => setActive(t)}
-          className={`px-5 py-2 rounded text-sm font-medium transition 
-            ${
-              active === t
-                ? "bg-[var(--admin-accent)] text-black shadow"
-                : "bg-[rgba(255,255,255,0.12)] text-[var(--admin-light)] hover:bg-[rgba(255,255,255,0.22)]"
-            }`}
-        >
-          {t.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
-}
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 export default function AdminDashboard() {
-  const [active, setActive] = useState("contacts");
-  const [contacts, setContacts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState({
+    contacts: 0,
+    careers: 0,
+    services: 0,
+    subscribers: 0,
+  });
 
-  const navigate = useNavigate();
-
-  // Protect admin route
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
-    if (!token) navigate("/admin");
-  }, []);
+    async function loadStats() {
+      try {
+        const contactsRes = await get("/api/contact/all");
+        const careersRes = await get("/api/careers");
+        const subscribersRes = await get("/api/subscribers");
 
-  // Fetch contacts from backend
-  async function loadContacts() {
-    setLoading(true);
-
-    const res = await get("/api/contact/all", true);
-
-    if (res?.success) {
-      setContacts(res.contacts);
+        setStats({
+          contacts: contactsRes?.contacts?.length || 0,
+          careers: Array.isArray(careersRes) ? careersRes.length : 0,
+          services: 0,
+          subscribers: Array.isArray(subscribersRes)
+            ? subscribersRes.length
+            : 0,
+        });
+      } catch (err) {
+        console.error("Error loading stats:", err);
+      }
     }
 
-    setLoading(false);
-  }
+    loadStats();
+  }, []);
 
-  useEffect(() => {
-    if (active === "contacts") loadContacts();
-  }, [active]);
+  const barData = [
+    { name: "Contacts", value: stats.contacts },
+    { name: "Careers", value: stats.careers },
+    { name: "Services", value: stats.services },
+    { name: "Subscribers", value: stats.subscribers },
+  ];
 
-  function doLogout() {
-    localStorage.removeItem("admin_token");
-    navigate("/admin");
-  }
+  const pieData = [
+    { name: "Contacts", value: stats.contacts },
+    { name: "Careers", value: stats.careers },
+    { name: "Services", value: stats.services },
+    { name: "Subscribers", value: stats.subscribers },
+  ];
 
-  const fmt = (d) => (d ? new Date(d).toLocaleString() : "-");
+  const COLORS = ["#3b82f6", "#a855f7", "#22c55e", "#f59e0b"];
 
   return (
-    <div className="admin-theme min-h-screen py-10 px-6">
-      <div className="admin-panel max-w-7xl mx-auto p-8 rounded-xl shadow-xl">
+    <div>
 
-        <div className="flex items-center justify-between mb-10">
-          <h1 className="text-3xl font-bold text-[var(--admin-light)]">
-            Admin Dashboard
-          </h1>
+      {/* HEADER */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        <p className="text-white/60 text-sm mt-1">
+          Welcome back, manage everything from here
+        </p>
+      </div>
 
-          <div className="flex items-center gap-4">
-            <Tabs active={active} setActive={setActive} />
+      {/* STATS */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-            <button
-              onClick={doLogout}
-              className="px-4 py-2 rounded bg-[var(--admin-accent)] text-black font-semibold hover:opacity-90 transition"
-            >
-              Logout
-            </button>
-          </div>
+        <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+          <p className="text-white/60 text-sm">Total Contacts</p>
+          <h2 className="text-2xl font-bold mt-1">{stats.contacts}</h2>
         </div>
 
-        {loading ? (
-          <div className="text-[var(--admin-light)]">Loading...</div>
-        ) : (
-          <>
-            {/* CONTACTS */}
-            {active === "contacts" && (
-              <>
-                <h3 className="text-xl mb-4 text-[var(--admin-light)] font-semibold">
-                  Contacts
-                </h3>
+        <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+          <p className="text-white/60 text-sm">Applications</p>
+          <h2 className="text-2xl font-bold mt-1">{stats.careers}</h2>
+        </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full admin-table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Company</th>
-                        <th>Message</th>
-                        <th>Created</th>
-                      </tr>
-                    </thead>
+        <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+          <p className="text-white/60 text-sm">Service Requests</p>
+          <h2 className="text-2xl font-bold mt-1">{stats.services}</h2>
+        </div>
 
-                    <tbody>
-                      {contacts.length === 0 ? (
-                        <tr>
-                          <td colSpan="6" className="py-6 text-center text-[var(--admin-light)]/60">
-                            No contact entries found
-                          </td>
-                        </tr>
-                      ) : (
-                        contacts.map((c) => (
-                          <tr key={c._id}>
-                            <td>{c.name}</td>
-                            <td>{c.email}</td>
-                            <td>{c.phone || "-"}</td>
-                            <td>{c.company || "-"}</td>
-                            <td>{c.message}</td>
-                            <td>{fmt(c.createdAt)}</td>
-                          </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
-          </>
-        )}
+        <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+          <p className="text-white/60 text-sm">Subscribers</p>
+          <h2 className="text-2xl font-bold mt-1">{stats.subscribers}</h2>
+        </div>
+
       </div>
+
+      {/* 📊 CHARTS */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+
+        <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+          <h2 className="text-lg font-semibold mb-4">Overview</h2>
+
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={barData}>
+              <XAxis dataKey="name" stroke="#aaa" />
+              <YAxis stroke="#aaa" />
+              <Tooltip />
+              <Bar dataKey="value" fill="#3b82f6" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+          <h2 className="text-lg font-semibold mb-4">Distribution</h2>
+
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie data={pieData} dataKey="value" outerRadius={80} label>
+                {pieData.map((entry, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+      </div>
+
+      {/* ✅ UPDATED SYSTEM HEALTH */}
+      <div className="mt-10">
+        <h2 className="text-lg font-semibold mb-4">System Health</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+
+          <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+            <p className="text-white/60 text-sm">Overall Status</p>
+            <h3 className="text-xl font-bold mt-2 text-green-400">
+              100% Operational
+            </h3>
+          </div>
+
+          <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+            <p className="text-white/60 text-sm">Contacts</p>
+            <p className="mt-2 text-green-400 font-medium">● Working</p>
+          </div>
+
+          <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+            <p className="text-white/60 text-sm">Careers</p>
+            <p className="mt-2 text-green-400 font-medium">● Active</p>
+          </div>
+
+          <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+            <p className="text-white/60 text-sm">Services</p>
+            <p className="mt-2 text-yellow-400 font-medium">● Maintenance</p>
+          </div>
+
+          <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
+            <p className="text-white/60 text-sm">Subscribers</p>
+            <p className="mt-2 text-green-400 font-medium">● Growing</p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   );
 }

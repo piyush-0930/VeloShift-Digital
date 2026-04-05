@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import FAQ from "../components/FAQ";
 
 export default function Careers() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -81,8 +82,9 @@ export default function Careers() {
 
   return (
     <div className="w-full bg-[var(--vs-bg)] text-[var(--vs-light)]">
+
       {/* HERO */}
-      <section className="w-full py-20 text-center px-6">
+      <section className="w-full py-14 text-center px-6">
         <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
           Build Your{" "}
           <span className="bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] bg-clip-text text-transparent">
@@ -90,116 +92,65 @@ export default function Careers() {
           </span>{" "}
           With Us
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-[var(--vs-light)]/80">
-          Join Veloshift Technology — work on AI, automation, cloud and digital
-          products that shape the next generation of tech.
-        </p>
       </section>
 
       <Divider />
 
       {/* WHY CHOOSE */}
-      <section className="py-16 px-6 max-w-6xl mx-auto">
+      <section className="py-12 px-6 max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white">
           Why Work at{" "}
           <span className="text-[var(--vs-secondary)]">Veloshift?</span>
         </h2>
         <Underline center />
 
-        <div className="mt-10 grid md:grid-cols-3 gap-8">
-          <WhyCard
-            icon="ri-rocket-2-line"
-            title="Fast-Growing Tech Company"
-            desc="Work directly on cloud, automation, AI and SaaS products."
-          />
-          <WhyCard
-            icon="ri-lightbulb-flash-line"
-            title="Innovation First"
-            desc="Experiment, iterate and build future-focused solutions."
-          />
-          <WhyCard
-            icon="ri-team-line"
-            title="Amazing Team Culture"
-            desc="Collaborate with talented developers, designers and engineers."
-          />
+        <div className="mt-8 grid md:grid-cols-3 gap-6">
+          <WhyCard icon="ri-rocket-2-line" title="Fast-Growing Tech Company" desc="Work directly on cloud, automation, AI and SaaS products." />
+          <WhyCard icon="ri-lightbulb-flash-line" title="Innovation First" desc="Experiment, iterate and build future-focused solutions." />
+          <WhyCard icon="ri-team-line" title="Amazing Team Culture" desc="Collaborate with talented developers, designers and engineers." />
         </div>
       </section>
 
       <Divider />
 
       {/* PERKS */}
-      <section className="py-16 px-6 max-w-6xl mx-auto">
+      <section className="py-12 px-6 max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white">
           Perks & <span className="text-[var(--vs-secondary)]">Benefits</span>
         </h2>
         <Underline center />
 
-        <div className="mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <Perk
-            icon="ri-booklet-line"
-            title="Learning & Certifications"
-            desc="AI, cloud and tech upskilling programs."
-          />
-          <Perk
-            icon="ri-health-book-line"
-            title="Health Support"
-            desc="Employee wellness & flexible assistance."
-          />
-          <Perk
-            icon="ri-wallet-3-line"
-            title="Competitive Pay"
-            desc="Great compensation with growth cycles."
-          />
-          <Perk
-            icon="ri-time-line"
-            title="Flexible Work"
-            desc="Hybrid & remote-friendly environments."
-          />
-          <Perk
-            icon="ri-flag-line"
-            title="Leave Policies"
-            desc="Fair and transparent leave structure."
-          />
-          <Perk
-            icon="ri-gift-line"
-            title="Team Events"
-            desc="Offsites, hackathons, and celebrations."
-          />
-        </div>
-      </section>
-
-      <Divider />
-
-      {/* PROCESS */}
-      <section className="py-16 px-6 max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Our Hiring{" "}
-          <span className="text-[var(--vs-secondary)]">Process</span>
-        </h2>
-        <Underline center />
-
-        <p className="mt-4 text-[var(--vs-light)]/75">
-          A simple and transparent journey to joining our tech team.
-        </p>
-
-        <div className="mt-12 grid md:grid-cols-4 gap-6">
-          <ProcessStep number="01" title="Apply Online" desc="Submit your resume & details." />
-          <ProcessStep number="02" title="Screening" desc="We review your application." />
-          <ProcessStep number="03" title="Technical Task" desc="Showcase your skillset." />
-          <ProcessStep number="04" title="Final Interview" desc="Meet our core team." />
+        <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <Perk icon="ri-booklet-line" title="Learning & Certifications" desc="AI, cloud and tech upskilling programs." />
+          <Perk icon="ri-health-book-line" title="Health Support" desc="Employee wellness & flexible assistance." />
+          <Perk icon="ri-wallet-3-line" title="Competitive Pay" desc="Great compensation with growth cycles." />
+          <Perk icon="ri-time-line" title="Flexible Work" desc="Hybrid & remote-friendly environments." />
+          <Perk icon="ri-flag-line" title="Leave Policies" desc="Fair and transparent leave structure." />
+          <Perk icon="ri-gift-line" title="Team Events" desc="Offsites, hackathons, and celebrations." />
         </div>
       </section>
 
       <Divider />
 
       {/* OPEN POSITIONS */}
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white">
-          Open <span className="text-[var(--vs-secondary)]">Positions</span>
-        </h2>
-        <Underline center />
+      <section className="py-12 px-6 max-w-6xl mx-auto">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white">
+            Open <span className="text-[var(--vs-secondary)]">Positions</span>
+          </h2>
+          <Underline center />
+          <p className="mt-4 text-[var(--vs-light)]/60 text-sm">
+            Don't see a role that fits?{" "}
+            <button
+              onClick={() => openApplyModal("")}
+              className="text-[var(--vs-secondary)] hover:underline font-medium"
+            >
+              Apply with a custom application →
+            </button>
+          </p>
+        </div>
 
-        <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.map((job, i) => (
             <JobCard key={i} job={job} openApplyModal={openApplyModal} />
           ))}
@@ -209,39 +160,7 @@ export default function Careers() {
       <Divider />
 
       {/* FAQ */}
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white">
-          Frequently Asked{" "}
-          <span className="text-[var(--vs-secondary)]">Questions</span>
-        </h2>
-        <Underline center />
-
-        <div className="mt-8 max-w-4xl mx-auto space-y-4">
-          <FAQ q="Do you offer remote roles?" a="Yes, several roles support hybrid or fully remote work." />
-          <FAQ q="Do you hire freshers?" a="Yes, we hire 0–2 year candidates in multiple roles." />
-          <FAQ q="What tech stack do you use?" a="React, Node.js, Python, AI/LLMs, AWS, Docker and more." />
-          <FAQ q="Is there learning support?" a="We offer internal training, mentorship and certifications." />
-        </div>
-      </section>
-
-      <Divider />
-
-      {/* CTA */}
-      <section className="py-16 px-6 bg-[#0F1A30] border-t border-white/10 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white">
-          Ready to Join Veloshift?
-        </h2>
-        <p className="mt-3 text-[var(--vs-light)]/80">
-          If you’re passionate about building the future of technology — apply now.
-        </p>
-
-        <button
-          onClick={() => openApplyModal("")}
-          className="mt-6 px-8 py-3 rounded-md text-lg font-semibold text-white bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] hover:opacity-90 transition shadow"
-        >
-          Apply Now
-        </button>
-      </section>
+      <FAQ />
 
       {modalOpen && <ApplyModal role={selectedRole} onClose={closeModal} />}
     </div>
@@ -252,40 +171,32 @@ export default function Careers() {
 function JobCard({ job, openApplyModal }) {
   return (
     <div className="
-      relative p-6 rounded-2xl 
-      bg-[#0d152b]/80 
-      border border-white/10 
+      relative p-5 rounded-2xl
+      bg-[#0d152b]/80
+      border border-white/10
       backdrop-blur-xl shadow-xl
-      transition-all duration-300 
-      hover:-translate-y-3 hover:shadow-2xl
+      transition-all duration-300
+      hover:-translate-y-2 hover:shadow-2xl
       hover:border-[var(--vs-secondary)]/40
       group
     ">
-      <div className="flex items-center gap-4 relative z-10">
-        <div
-          className={`w-16 h-16 flex items-center justify-center rounded-xl ${job.iconBg} bg-opacity-20 border border-white/10 shadow-inner`}
-        >
-          <i className={`${job.icon} text-3xl text-white`}></i>
+      <div className="flex items-center gap-3 relative z-10">
+        <div className={`w-14 h-14 flex items-center justify-center rounded-xl ${job.iconBg} bg-opacity-20 border border-white/10 shadow-inner shrink-0`}>
+          <i className={`${job.icon} text-2xl text-white`}></i>
         </div>
-
         <div>
-          <h3 className="text-xl font-bold text-white">{job.role}</h3>
-          <div className="flex flex-wrap gap-2 mt-1 text-[var(--vs-light)]/70 text-xs">
-            <span className="px-2 py-1 bg-white/5 rounded-md">{job.exp}</span>
-            <span className="px-2 py-1 bg-white/5 rounded-md">{job.location}</span>
-            <span className="px-2 py-1 bg-[var(--vs-secondary)]/20 text-[var(--vs-secondary)] rounded-md">
-              {job.type}
-            </span>
+          <h3 className="text-base font-bold text-white leading-snug">{job.role}</h3>
+          <div className="flex flex-wrap gap-1.5 mt-1 text-[var(--vs-light)]/70 text-xs">
+            <span className="px-2 py-0.5 bg-white/5 rounded-md">{job.exp}</span>
+            <span className="px-2 py-0.5 bg-white/5 rounded-md">{job.location}</span>
+            <span className="px-2 py-0.5 bg-[var(--vs-secondary)]/20 text-[var(--vs-secondary)] rounded-md">{job.type}</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mt-5">
+      <div className="flex flex-wrap gap-2 mt-4">
         {job.tags.map((tag, idx) => (
-          <span
-            key={idx}
-            className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm text-[var(--vs-light)]/80"
-          >
+          <span key={idx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs text-[var(--vs-light)]/80">
             {tag}
           </span>
         ))}
@@ -293,7 +204,7 @@ function JobCard({ job, openApplyModal }) {
 
       <button
         onClick={() => openApplyModal(job.role)}
-        className={`mt-6 w-full py-2 rounded-md text-white font-medium bg-gradient-to-r ${job.gradient} hover:opacity-90 transition`}
+        className={`mt-4 w-full py-2 rounded-lg text-white text-sm font-medium bg-gradient-to-r ${job.gradient} hover:opacity-90 transition`}
       >
         Apply Now →
       </button>
@@ -305,55 +216,29 @@ function JobCard({ job, openApplyModal }) {
 
 function WhyCard({ icon, title, desc }) {
   return (
-    <div className="bg-[#0F1A30] border border-white/10 p-6 rounded-2xl text-center hover:scale-[1.02] transition shadow">
+    <div className="bg-[#0F1A30] border border-white/10 p-5 rounded-2xl text-center hover:scale-[1.02] transition shadow">
       <i className={`${icon} text-4xl text-[var(--vs-secondary)]`}></i>
-      <h3 className="text-lg font-bold text-white mt-4">{title}</h3>
-      <p className="text-[var(--vs-light)]/75 mt-2">{desc}</p>
+      <h3 className="text-base font-bold text-white mt-3">{title}</h3>
+      <p className="text-[var(--vs-light)]/75 mt-1.5 text-sm">{desc}</p>
     </div>
   );
 }
 
 function Perk({ icon, title, desc }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl bg-[#121b36]/40 border border-white/10">
-      <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[var(--vs-primary)]/10">
-        <i className={`${icon} text-2xl text-[var(--vs-primary)]`}></i>
+    <div className="flex items-start gap-3 p-4 rounded-xl bg-[#121b36]/40 border border-white/10">
+      <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[var(--vs-primary)]/10 shrink-0">
+        <i className={`${icon} text-xl text-[var(--vs-primary)]`}></i>
       </div>
       <div>
-        <h4 className="font-semibold text-white">{title}</h4>
-        <p className="text-[var(--vs-light)]/75 mt-1">{desc}</p>
+        <h4 className="font-semibold text-white text-sm">{title}</h4>
+        <p className="text-[var(--vs-light)]/75 mt-1 text-sm">{desc}</p>
       </div>
     </div>
-  );
-}
-
-function ProcessStep({ number, title, desc }) {
-  return (
-    <div className="bg-[#121b36]/40 border border-white/10 p-6 rounded-2xl">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center bg-[var(--vs-secondary)]/10 text-[var(--vs-secondary)] font-extrabold">
-          {number}
-        </div>
-        <div>
-          <h4 className="text-lg font-bold text-white">{title}</h4>
-          <p className="text-[var(--vs-light)]/75 mt-1">{desc}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function FAQ({ q, a }) {
-  return (
-    <details className="bg-[#121b36]/40 border border-white/10 p-6 rounded-xl cursor-pointer">
-      <summary className="text-lg font-semibold text_white">{q}</summary>
-      <p className="mt-3 text-[var(--vs-light)]/75">{a}</p>
-    </details>
   );
 }
 
 /* ------------------ APPLY MODAL ------------------ */
-
 function ApplyModal({ role, onClose }) {
   const resumeRef = useRef(null);
 
@@ -366,36 +251,45 @@ function ApplyModal({ role, onClose }) {
   });
 
   const [submitting, setSubmitting] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [submitStatus, setSubmitStatus] = useState(null); // null | "success" | "error"
+  const [errorMsg, setErrorMsg] = useState("");
 
   function onChange(e) {
     const { name, value } = e.target;
+    if (name === "phone") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 15);
+      setForm((prev) => ({ ...prev, phone: digitsOnly }));
+      return;
+    }
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   async function onSubmit(e) {
     e.preventDefault();
+    setSubmitStatus(null);
+    setErrorMsg("");
 
     if (!form.name || !form.email || !form.role) {
-      alert("Please fill all required fields.");
+      setSubmitStatus("error");
+      setErrorMsg("Please fill all required fields.");
       return;
     }
 
     const resumeFile = resumeRef.current?.files[0];
     if (!resumeFile) {
-      alert("Please upload a resume.");
+      setSubmitStatus("error");
+      setErrorMsg("Please upload your resume.");
       return;
     }
 
     setSubmitting(true);
-    setProgress(0);
 
     const formData = new FormData();
     Object.keys(form).forEach((key) => formData.append(key, form[key]));
     formData.append("resume", resumeFile);
 
     try {
-      const response = await fetch("https://veloshift-backend.onrender.com/api/apply", {
+      const response = await fetch("https://veloshift-backend.onrender.com/api/careers", {
         method: "POST",
         body: formData,
       });
@@ -403,68 +297,199 @@ function ApplyModal({ role, onClose }) {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.error || "Failed to submit.");
-        return;
+        setSubmitStatus("error");
+        setErrorMsg(data.error || "Submission failed. Please try again.");
+      } else {
+        setSubmitStatus("success");
       }
-
-      alert("Application submitted successfully!");
-      onClose();
     } catch {
-      alert("Failed to submit.");
+      setSubmitStatus("error");
+      setErrorMsg("Network error. Please check your connection and try again.");
     }
 
     setSubmitting(false);
   }
 
+  // ── SUCCESS SCREEN ──
+  if (submitStatus === "success") {
+    return (
+      <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+        <div className="bg-[#0b1324] w-full max-w-md rounded-2xl shadow-2xl border border-white/10 px-8 py-12 flex flex-col items-center text-center gap-4">
+          <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
+            <i className="ri-check-line text-3xl text-emerald-400"></i>
+          </div>
+          <h4 className="text-xl font-bold text-white">Application Submitted!</h4>
+          <p className="text-[var(--vs-light)]/60 text-sm leading-relaxed max-w-xs">
+            Thanks for applying. Our team will review your application and get back to you — keep an eye on your mail for updates.
+          </p>
+          <button
+            onClick={onClose}
+            className="mt-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] text-white text-sm font-semibold hover:opacity-90 transition"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── FORM ──
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
-      <div className="bg-[#0b1324] w-full max-w-2xl rounded-2xl p-6 shadow-2xl relative">
-        <button
-          onClick={onClose}
-          type="button"
-          className="absolute top-4 right-4 text-white/60 hover:text-white"
-        >
-          ✕
-        </button>
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
+      <div className="bg-[#0b1324] w-full max-w-xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
 
-        <h3 className="text-2xl font-bold text-white">
-          {role ? `Apply — ${role}` : "Apply to Veloshift"}
-        </h3>
+        {/* Modal Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0d152b]">
+          <div>
+            <h3 className="text-lg font-bold text-white">
+              {role ? `Apply — ${role}` : "Custom Application"}
+            </h3>
+            <p className="text-xs text-[var(--vs-light)]/50 mt-0.5">
+              {role
+                ? "Fill in your details to apply for this role."
+                : "Tell us about yourself and what role you're interested in."}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            type="button"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition"
+          >
+            ✕
+          </button>
+        </div>
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input name="name" className="input" value={form.name} onChange={onChange} placeholder="Full Name" />
-            <input name="email" type="email" className="input" value={form.email} onChange={onChange} placeholder="Email" />
+        {/* Modal Body */}
+        <form onSubmit={onSubmit} className="px-6 py-5 space-y-4">
+
+          {submitStatus === "error" && (
+            <div className="flex items-start gap-3 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+              <i className="ri-error-warning-line text-base mt-0.5 shrink-0"></i>
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-[var(--vs-light)]/50 font-medium">
+                Full Name <span className="text-red-400">*</span>
+              </label>
+              <input
+                name="name"
+                value={form.name}
+                onChange={onChange}
+                placeholder="John Doe"
+                className="px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[var(--vs-secondary)]/50 transition"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-[var(--vs-light)]/50 font-medium">
+                Email Address <span className="text-red-400">*</span>
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={onChange}
+                placeholder="john@example.com"
+                className="px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[var(--vs-secondary)]/50 transition"
+              />
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input name="phone" className="input" value={form.phone} onChange={onChange} placeholder="Phone Number" />
-            <input name="role" className="input" value={form.role} onChange={onChange} placeholder="Applying for" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-[var(--vs-light)]/50 font-medium">Phone Number</label>
+              <input
+                name="phone"
+                value={form.phone}
+                onChange={onChange}
+                inputMode="numeric"
+                maxLength={15}
+                placeholder="9876543210"
+                className="px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[var(--vs-secondary)]/50 transition"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-[var(--vs-light)]/50 font-medium">
+                Applying For <span className="text-red-400">*</span>
+              </label>
+              <input
+                name="role"
+                value={form.role}
+                onChange={onChange}
+                placeholder="e.g. AI Engineer"
+                className="px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[var(--vs-secondary)]/50 transition"
+              />
+            </div>
           </div>
 
-          <textarea
-            name="coverLetter"
-            value={form.coverLetter}
-            onChange={onChange}
-            placeholder="Cover Letter (optional)"
-            className="p-3 w-full rounded bg-transparent border border-white/10 text-white"
-            rows={4}
-          />
+          <div className="flex flex-col gap-1">
+            <label className="text-xs text-[var(--vs-light)]/50 font-medium">
+              Cover Letter <span className="text-[var(--vs-light)]/30">(optional)</span>
+            </label>
+            <textarea
+              name="coverLetter"
+              value={form.coverLetter}
+              onChange={onChange}
+              placeholder="Tell us why you'd be a great fit..."
+              rows={3}
+              className="px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[var(--vs-secondary)]/50 transition resize-none"
+            />
+          </div>
 
-          <input
-            type="file"
-            ref={resumeRef}
-            accept=".pdf,.doc,.docx"
-            className="file:bg-[var(--vs-secondary)] file:text-white file:px-4 file:py-2 file:rounded-md"
-          />
+          <div className="flex flex-col gap-1">
+            <label className="text-xs text-[var(--vs-light)]/50 font-medium">
+              Resume <span className="text-red-400">*</span>
+            </label>
+            <div className="px-3 py-2.5 rounded-lg bg-white/5 border border-dashed border-white/10">
+              <input
+                type="file"
+                ref={resumeRef}
+                accept=".pdf"
+                className="w-full text-sm text-white/60
+                  file:mr-3 file:py-1.5 file:px-3
+                  file:rounded-md file:border-0
+                  file:text-xs file:font-medium
+                  file:bg-[var(--vs-secondary)] file:text-white
+                  hover:file:opacity-90 file:cursor-pointer"
+              />
+            </div>
+            <p className="text-[10px] text-[var(--vs-light)]/30">Accepted formats: PDF</p>
+          </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3 rounded-md bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] text-white font-semibold mt-4 disabled:opacity-70"
+            className="w-full py-2.5 rounded-lg bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] text-white text-sm font-semibold hover:opacity-90 transition disabled:opacity-60 flex items-center justify-center gap-2"
           >
-            {submitting ? "Submitting..." : "Submit Application"}
+            {submitting ? (
+              <>
+                <svg
+                  className="animate-spin w-4 h-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12" cy="12" r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+                Submitting...
+              </>
+            ) : (
+              "Submit Application"
+            )}
           </button>
+
         </form>
       </div>
     </div>
@@ -474,13 +499,13 @@ function ApplyModal({ role, onClose }) {
 /* ------------------ HELPERS ------------------ */
 
 function Divider() {
-  return <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-8"></div>;
+  return <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-6" />;
 }
 
 function Underline({ center }) {
   return (
     <div
-      className={`h-1 w-24 ${center ? "mx-auto" : ""} mt-3 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded-full`}
+      className={`h-1 w-20 ${center ? "mx-auto" : ""} mt-3 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] rounded-full`}
     />
   );
 }

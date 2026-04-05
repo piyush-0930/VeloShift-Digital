@@ -1,5 +1,5 @@
 /* -----------------------------------
-   VELOSHIFT GLOBAL COLOR THEME
+   VELOSHIFT GLOBAL THEME (MAIN SITE)
 ----------------------------------- */
 :root {
   --vs-bg: #0B142B;
@@ -10,84 +10,41 @@
 }
 
 /* -----------------------------------
-   CLEAN ADMIN THEME (no conflict)
+   ADMIN THEME (ISOLATED)
 ----------------------------------- */
-.admin-theme {
-  --admin-bg: #18071D;
-  --admin-bg2: #220A2A;
-  --admin-card: #2E0F34;
-  --admin-accent: #C63C51;
-  --admin-accent2: #E65F82;
-  --admin-light: #E7DDEB;
+:root {
+  --admin-bg: #0b1324;
+  --admin-sidebar: #111c3a;
+  --admin-card: #1a2547;
+  --admin-accent: #6366f1;
+  --admin-light: #ffffff;
 }
 
-/* Admin full page bg */
-.admin-theme {
-  background: radial-gradient(circle at top, var(--admin-bg2), var(--admin-bg));
-  min-height: 100vh;
-  color: var(--admin-light);
+/* Sidebar links */
+.nav-link {
+  padding: 10px;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  transition: 0.2s;
 }
 
-/* Admin panels */
-.admin-theme .admin-panel,
-.admin-theme .admin-card,
-.admin-theme .admin-login-panel {
-  background: rgba(34, 10, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+.nav-link:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 
-/* Inputs */
-.admin-theme input,
-.admin-theme select {
-  background: rgba(46, 15, 52, 0.45);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: var(--admin-light);
-}
-
-/* Buttons */
-.admin-theme .btn-primary,
-.admin-theme button[type="submit"],
-.admin-theme .admin-login-button {
-  background: linear-gradient(90deg, var(--admin-accent), var(--admin-accent2));
-  color: #fff;
-  font-weight: 600;
-}
-
-.admin-theme .btn-danger {
-  background: rgba(198,60,81,0.15);
-  border: 1px solid rgba(198,60,81,0.35);
-  color: #FF8FA0;
-}
-
-/* Admin table */
-.admin-theme .admin-table thead th {
-  background: rgba(46,15,52,0.3);
-  color: var(--admin-light);
-}
-
-.admin-theme .admin-table tbody td {
-  color: var(--admin-light);
-}
-
-.admin-theme .resume-link {
-  color: var(--admin-accent2);
-}
-
-/* Hide navbar/footer ONLY on admin-login */
-.admin-hide-ui nav,
-.admin-hide-ui footer {
-  display: none !important;
+.nav-link.active {
+  background: var(--admin-accent);
+  color: white;
 }
 
 /* -----------------------------------
-   TAILWIND IMPORT
+   TAILWIND
 ----------------------------------- */
 @import "tailwindcss";
 
 /* -----------------------------------
-   UTILITIES (same as user pages)
+   GLOBAL UTILITIES (MAIN SITE ONLY)
 ----------------------------------- */
 
 /* Grid background */
@@ -122,20 +79,7 @@ body {
   scrollbar-color: var(--vs-primary) var(--vs-bg);
 }
 
-/* Timeline & About utilities */
-.timeline-card {
-  background: linear-gradient(90deg, rgba(17,25,48,0.6), rgba(11,20,43,0.55));
-  border: 1px solid rgba(255,255,255,0.04);
-}
-
-.timeline-dot {
-  width: 14px; height: 14px;
-  border-radius: 999px;
-  background: var(--vs-secondary);
-  box-shadow: 0 0 12px rgba(56,167,240,0.18);
-  border: 2px solid rgba(255,255,255,0.06);
-}
-
+/* Utilities */
 .muted { color: rgba(229,231,235,0.65); }
 .small { font-size: 0.85rem; }
 
