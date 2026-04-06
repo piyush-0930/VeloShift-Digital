@@ -28,11 +28,12 @@ export default function AdminDashboard() {
         const contactsRes = await get("/api/contact/all");
         const careersRes = await get("/api/careers");
         const subscribersRes = await get("/api/subscribers");
+        const servicesRes = await get("/api/quotes"); // ✅ ADDED
 
         setStats({
           contacts: contactsRes?.contacts?.length || 0,
           careers: Array.isArray(careersRes) ? careersRes.length : 0,
-          services: 0,
+          services: servicesRes?.data?.length || 0, // ✅ FIXED
           subscribers: Array.isArray(subscribersRes)
             ? subscribersRes.length
             : 0,
@@ -130,7 +131,7 @@ export default function AdminDashboard() {
 
       </div>
 
-      {/* ✅ UPDATED SYSTEM HEALTH */}
+      {/* SYSTEM HEALTH */}
       <div className="mt-10">
         <h2 className="text-lg font-semibold mb-4">System Health</h2>
 
@@ -145,17 +146,17 @@ export default function AdminDashboard() {
 
           <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
             <p className="text-white/60 text-sm">Contacts</p>
-            <p className="mt-2 text-green-400 font-medium">● Working</p>
+            <p className="mt-2 text-green-400 font-medium">● Stable</p>
           </div>
 
           <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
             <p className="text-white/60 text-sm">Careers</p>
-            <p className="mt-2 text-green-400 font-medium">● Active</p>
+            <p className="mt-2 text-green-400 font-medium">● Hiring</p>
           </div>
 
           <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">
             <p className="text-white/60 text-sm">Services</p>
-            <p className="mt-2 text-yellow-400 font-medium">● Maintenance</p>
+            <p className="mt-2 text-green-400 font-medium">● Processing</p> {/* ✅ changed from maintenance */}
           </div>
 
           <div className="bg-[var(--admin-card)] p-6 rounded-xl border border-white/10">

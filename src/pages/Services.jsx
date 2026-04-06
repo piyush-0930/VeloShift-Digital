@@ -9,11 +9,23 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
-import { Link } from "react-router-dom";
 
 export default function Services() {
   const [counts, setCounts] = useState([0, 0, 0, 0]);
   const targets = [40, 50, 99.9, 97];
+
+  const [selectedService, setSelectedService] = useState(null);
+
+  const [formData, setFormData] = useState({
+    service: "",
+    subService: "",
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    preferredTime: "",
+    customRequirement: "",
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,45 +43,97 @@ export default function Services() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleOpenModal = (service) => {
+    setSelectedService(service);
+    setFormData((prev) => ({
+      ...prev,
+      service: service.title,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch("https://veloshift-backend.onrender.com/api/quotes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Quote submitted successfully 🚀");
+        setSelectedService(null);
+        setFormData({
+          service: "",
+          subService: "",
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          preferredTime: "",
+          customRequirement: "",
+        });
+      } else {
+        alert(data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server error");
+    }
+  };
+
   const services = [
+    {
+      title: "Development",
+      icon: "ri-code-s-slash-line",
+      items: [
+        "Web Development",
+        "Mobile App Development",
+        "Software Development",
+        "Custom Solutions",
+      ],
+    },
     {
       title: "AI & Automation",
       icon: "ri-robot-2-line",
       items: [
-        "AI Chatbots & Assistants",
+        "AI Chatbots",
         "Workflow Automation",
-        "Machine Learning Systems",
+        "Machine Learning",
         "Predictive Analytics",
       ],
     },
     {
-      title: "Web & App Engineering",
-      icon: "ri-code-s-slash-line",
-      items: [
-        "Full Stack Web Apps",
-        "Mobile Applications",
-        "Admin Dashboards",
-        "Custom Platforms",
-      ],
-    },
-    {
-      title: "Cloud & DevOps",
+      title: "Cloud Services",
       icon: "ri-cloud-line",
       items: [
+        "Cloud Deployment",
+        "DevOps",
         "AWS / Azure / GCP",
-        "CI/CD Pipelines",
-        "Scalable Infrastructure",
         "Cloud Migration",
       ],
     },
     {
-      title: "API & Integrations",
+      title: "Tech Integrations",
       icon: "ri-link-m",
       items: [
+        "API Integration",
+        "CRM Integration",
         "Payment Gateways",
-        "CRM / ERP Integrations",
-        "3rd Party APIs",
-        "Automation Pipelines",
+        "Automation",
+      ],
+    },
+    {
+      title: "Design & Consulting",
+      icon: "ri-pen-nib-line",
+      items: [
+        "UI/UX Design",
+        "IT Consulting",
+        "Branding",
+        "Support",
       ],
     },
     {
@@ -80,16 +144,6 @@ export default function Services() {
         "Subscription Systems",
         "Admin Panels",
         "Enterprise Tools",
-      ],
-    },
-    {
-      title: "Business Systems",
-      icon: "ri-cpu-line",
-      items: [
-        "Internal Tools",
-        "Automation Dashboards",
-        "Workflow Engines",
-        "Data Systems",
       ],
     },
   ];
@@ -128,11 +182,12 @@ export default function Services() {
   ];
 
   const comparison = [
-    { feature: "Modern Tech Stack", us: true, agency: false, freelancer: false },
-    { feature: "Fast Delivery", us: true, agency: false, freelancer: false },
-    { feature: "Scalable Systems", us: true, agency: false, freelancer: false },
-    { feature: "Long-term Support", us: true, agency: true, freelancer: false },
+    { feature: "Full-Stack Development", us: true, agency: false, freelancer: false },
     { feature: "AI & Automation Expertise", us: true, agency: false, freelancer: false },
+    { feature: "Cloud & DevOps Services", us: true, agency: false, freelancer: false },
+    { feature: "End-to-End Integrations", us: true, agency: true, freelancer: false },
+    { feature: "Design & Consulting", us: true, agency: true, freelancer: false },
+    { feature: "Long-term Support", us: true, agency: true, freelancer: false },
   ];
 
   return (
@@ -165,39 +220,33 @@ export default function Services() {
                 <div className="text-4xl text-indigo-400 mb-4 group-hover:rotate-6 transition">
                   <i className={srv.icon}></i>
                 </div>
-
                 <h3 className="text-xl font-bold mb-4">{srv.title}</h3>
-
                 <ul className="space-y-2 text-gray-300 mb-6">
                   {srv.items.map((item, idx) => (
                     <li key={idx}>• {item}</li>
                   ))}
                 </ul>
               </div>
-
-              {/* CTA BUTTON */}
-              <Link
-                to="/contact"
+              <button
+                onClick={() => handleOpenModal(srv)}
                 className="mt-auto inline-block text-center px-5 py-2 rounded-lg 
                            bg-gradient-to-r from-indigo-500 to-purple-500 
                            text-sm font-semibold hover:opacity-90 transition"
               >
                 Get Quote
-              </Link>
+              </button>
             </div>
           ))}
         </div>
       </section>
 
-      {/* COMPARISON (NO BOX FEEL) */}
+      {/* COMPARISON */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <h2 className="text-4xl font-extrabold text-center mb-12">
           Why We Stand Out
         </h2>
-
         <div className="overflow-x-auto">
           <table className="w-full min-w-[800px] text-left">
-
             <thead className="text-gray-400 border-b border-white/10">
               <tr>
                 <th className="px-6 py-4">Feature</th>
@@ -206,12 +255,10 @@ export default function Services() {
                 <th className="px-6 py-4">Freelancers</th>
               </tr>
             </thead>
-
             <tbody>
               {comparison.map((row, i) => (
                 <tr key={i} className="border-b border-white/5">
                   <td className="px-6 py-5 font-medium">{row.feature}</td>
-
                   {[row.us, row.agency, row.freelancer].map((val, idx) => (
                     <td key={idx} className="px-6 py-5">
                       {val ? (
@@ -224,7 +271,6 @@ export default function Services() {
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
       </section>
@@ -234,31 +280,12 @@ export default function Services() {
         <h2 className="text-4xl font-extrabold text-center mb-16">
           Our Proven Workflow
         </h2>
-
         <div className="grid md:grid-cols-3 gap-10">
           {workflow.map((step, i) => (
-            <div
-              key={i}
-              className="relative group bg-[#121b36]/80 backdrop-blur-lg border border-white/10 
-                         rounded-2xl p-8 transition duration-300 
-                         hover:-translate-y-2 hover:border-indigo-400/40 
-                         hover:shadow-xl hover:shadow-indigo-500/10"
-            >
-              <div className="absolute top-4 right-6 text-6xl font-extrabold text-white/5">
-                0{i + 1}
-              </div>
-
-              <div className="text-indigo-400 mb-4">
-                {step.icon}
-              </div>
-
-              <h3 className="text-lg font-semibold mb-2">
-                {step.title}
-              </h3>
-
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {step.desc}
-              </p>
+            <div key={i} className="bg-[#121b36] p-8 rounded-2xl">
+              <div className="text-indigo-400 mb-4">{step.icon}</div>
+              <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+              <p className="text-gray-400 text-sm">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -283,6 +310,125 @@ export default function Services() {
         </div>
       </section>
 
+      {/* MODAL */}
+      {selectedService && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(4px)" }}
+        >
+          <div
+            className="w-full max-w-lg rounded-2xl overflow-hidden"
+            style={{ background: "#121b36", border: "0.5px solid rgba(255,255,255,0.1)" }}
+          >
+
+            {/* Modal Header */}
+            <div style={{ background: "linear-gradient(135deg, #3730a3, #6d28d9)", padding: "1.5rem 1.75rem", position: "relative" }}>
+              <p style={{ fontSize: "11px", fontWeight: 500, color: "rgba(255,255,255,0.55)", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 4px" }}>
+                Request a quote
+              </p>
+              <p style={{ fontSize: "20px", fontWeight: 600, color: "#fff", margin: 0 }}>
+                {selectedService.title}
+              </p>
+              <button
+                onClick={() => setSelectedService(null)}
+                style={{ position: "absolute", top: "1rem", right: "1.25rem", background: "transparent", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", lineHeight: 1 }}
+              >
+                <XCircle size={22} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: "1.5rem 1.75rem", display: "flex", flexDirection: "column", gap: "14px" }}>
+
+              {/* Sub-service */}
+              <div>
+                <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>
+                  Service type
+                </label>
+                <select
+                  className="w-full rounded-lg text-white text-sm"
+                  style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                  onChange={(e) => setFormData({ ...formData, subService: e.target.value })}
+                >
+                  <option>Select a sub-service</option>
+                  {selectedService.items.map((item, i) => (
+                    <option key={i}>{item}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Name + Company */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Name</label>
+                  <input
+                    placeholder="John Doe"
+                    className="w-full rounded-lg text-white text-sm"
+                    style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Company</label>
+                  <input
+                    placeholder="Acme Inc."
+                    className="w-full rounded-lg text-white text-sm"
+                    style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              {/* Email + Phone */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Email</label>
+                  <input
+                    placeholder="you@email.com"
+                    className="w-full rounded-lg text-white text-sm"
+                    style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Phone</label>
+                  <input
+                    placeholder="+91 98765 43210"
+                    className="w-full rounded-lg text-white text-sm"
+                    style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                    onKeyDown={(e) => { const a=["Backspace","Delete","ArrowLeft","ArrowRight","Tab"]; if (!/[\d+\-\s]/.test(e.key) && !a.includes(e.key)) e.preventDefault(); }} onChange={(e) => { const v=e.target.value.replace(/[^\d+\-\s]/g,""); e.target.value=v; setFormData({...formData,phone:v}); }}
+                  />
+                </div>
+              </div>
+
+              {/* Preferred Time */}
+              <div>
+                <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>
+                  Preferred time to call
+                </label>
+                <input
+                  placeholder="e.g. 4:30AM or 5:00PM"
+                  className="w-full rounded-lg text-white text-sm"
+                  style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                  onKeyDown={(e) => { const a=["Backspace","Delete","ArrowLeft","ArrowRight","Tab"]; if (!/[\d:aApPmM]/.test(e.key) && !a.includes(e.key)) e.preventDefault(); }} onChange={(e) => { const v=e.target.value.replace(/[^0-9:aApPmM]/g,""); e.target.value=v; setFormData({...formData,preferredTime:v}); }}
+                />
+              </div>
+
+              {/* Submit */}
+              <button
+                onClick={handleSubmit}
+                className="w-full rounded-lg py-3 font-semibold text-white text-sm transition hover:opacity-90"
+                style={{ background: "linear-gradient(135deg, #4f46e5, #7c3aed)", marginTop: "2px" }}
+              >
+                Submit Request
+              </button>
+
+
+
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

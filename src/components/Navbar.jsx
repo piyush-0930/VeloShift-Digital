@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, Plus, Minus } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -39,6 +39,10 @@ export default function Navbar() {
         {
           title: "Design & Consulting",
           items: ["UI/UX Design", "IT Consulting", "Branding", "Support"],
+        },
+        {
+          title: "SaaS & Platforms",
+          items: ["Multi-tenant SaaS", "Subscription Systems", "Admin Panels", "Enterprise Tools"],
         },
       ],
     },
@@ -103,12 +107,12 @@ export default function Navbar() {
 
               {/* Mega Menu */}
               {item.mega && (
-                <div className="absolute left-1/2 -translate-x-[60%] top-full pt-4 w-[1000px] max-w-[95vw] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+                <div className="absolute left-1/2 -translate-x-[54%] top-full pt-4 w-[1000px] max-w-[95vw] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
                   <div className="px-4">
                     <div className="bg-[#1a2540]/95 backdrop-blur-md rounded-xl shadow-2xl p-8 border border-white/5">
                       <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
                         {item.sections.map((section, idx) => (
-                          <div key={idx} className="bg-[#223056] p-5 rounded-xl hover:bg-[#283a66] transition-all duration-300 shadow-md hover:shadow-xl border border-white/5 hover:-translate-y-1">
+                          <Link to="/services" key={idx} className="block bg-[#223056] p-5 rounded-xl hover:bg-[#283a66] transition-all duration-300 shadow-md hover:shadow-xl border border-white/5 hover:-translate-y-1">
                             <h4 className="text-[#38A7F0] font-semibold mb-2 text-xs uppercase tracking-wider">
                               {section.title}
                             </h4>
@@ -121,7 +125,7 @@ export default function Navbar() {
                                 </li>
                               ))}
                             </ul>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -157,7 +161,9 @@ export default function Navbar() {
                   className="flex justify-between items-center text-lg font-medium cursor-pointer"
                 >
                   <span>{item.name}</span>
-                  {(item.dropdown || item.mega) && <Plus size={20} />}
+                  {(item.dropdown || item.mega) && (
+                    mobileDropdown === i ? <Minus size={20} /> : <Plus size={20} />
+                  )}
                 </div>
 
                 {mobileDropdown === i && (
@@ -188,12 +194,14 @@ export default function Navbar() {
                     {item.mega &&
                       item.sections.map((sec, idx) => (
                         <div key={idx}>
-                          <p className="text-[#38A7F0] font-semibold mb-2">{sec.title}</p>
-                          <div className="space-y-2 pl-2">
-                            {sec.items.map((s, j) => (
-                              <p key={j} className="hover:text-white cursor-pointer">{s}</p>
-                            ))}
-                          </div>
+                          <Link to="/services" className="block" onClick={() => setOpen(false)}>
+                            <p className="text-[#38A7F0] font-semibold mb-2">{sec.title}</p>
+                            <div className="space-y-2 pl-2">
+                              {sec.items.map((s, j) => (
+                                <p key={j} className="hover:text-white cursor-pointer">{s}</p>
+                              ))}
+                            </div>
+                          </Link>
                         </div>
                       ))}
                   </div>
