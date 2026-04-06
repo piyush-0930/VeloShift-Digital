@@ -130,7 +130,7 @@ export default function ServicesPage() {
         <div className="flex gap-2 flex-wrap">
           <input
             type="text"
-            placeholder="Search name, email, service..."
+            placeholder="Search name or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="px-3 py-2 rounded border border-white/20 bg-[#0b1324] text-white text-sm"
