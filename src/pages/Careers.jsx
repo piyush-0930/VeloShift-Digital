@@ -98,16 +98,26 @@ export default function Careers() {
 
       {/* WHY CHOOSE */}
       <section className="py-12 px-6 max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-white">
-          Why Work at{" "}
-          <span className="text-[var(--vs-secondary)]">Veloshift?</span>
-        </h2>
-        <Underline center />
-
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <WhyCard icon="ri-rocket-2-line" title="Fast-Growing Tech Company" desc="Work directly on cloud, automation, AI and SaaS products." />
-          <WhyCard icon="ri-lightbulb-flash-line" title="Innovation First" desc="Experiment, iterate and build future-focused solutions." />
-          <WhyCard icon="ri-team-line" title="Amazing Team Culture" desc="Collaborate with talented developers, designers and engineers." />
+        <div className="flex flex-col md:flex-row items-center gap-10">
+          {/* Left: text */}
+          <div className="flex-1">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white">
+              Why Work at{" "}
+              <span className="text-[var(--vs-secondary)]">VeloShift?</span>
+            </h2>
+            <Underline />
+            <p className="mt-6 text-[var(--vs-light)]/70 text-base leading-relaxed">
+              VeloShift is a fast-growing tech company where you work directly on cutting-edge cloud, automation, AI and SaaS products that make a real impact. We put innovation first — you'll have the freedom to experiment, iterate, and build future-focused solutions without bureaucracy slowing you down. And at the heart of it all is an amazing team culture built on collaboration, where talented developers, designers, and engineers push each other to grow every single day.
+            </p>
+          </div>
+          {/* Right: image */}
+          <div className="flex-1 flex justify-center">
+            <img
+              src="/src/assets/cutbi.png"
+              alt="Why Veloshift"
+              className="w-full max-w-sm rounded-2xl object-cover"
+            />
+          </div>
         </div>
       </section>
 
@@ -213,16 +223,6 @@ function JobCard({ job, openApplyModal }) {
 }
 
 /* ------------------ SMALL COMPONENTS ------------------ */
-
-function WhyCard({ icon, title, desc }) {
-  return (
-    <div className="bg-[#0F1A30] border border-white/10 p-5 rounded-2xl text-center hover:scale-[1.02] transition shadow">
-      <i className={`${icon} text-4xl text-[var(--vs-secondary)]`}></i>
-      <h3 className="text-base font-bold text-white mt-3">{title}</h3>
-      <p className="text-[var(--vs-light)]/75 mt-1.5 text-sm">{desc}</p>
-    </div>
-  );
-}
 
 function Perk({ icon, title, desc }) {
   return (

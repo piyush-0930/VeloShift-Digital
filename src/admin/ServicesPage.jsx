@@ -86,7 +86,7 @@ export default function ServicesPage() {
       "Company",
       "Preferred Time",
       "Status",
-      "Created",
+      "Received",
     ];
 
     const rows = services.map((s) => [
@@ -170,7 +170,7 @@ export default function ServicesPage() {
               <th className="p-3">Company</th>
               <th className="p-3">Preferred Time</th>
               <th className="p-3">Status</th>
-              <th className="p-3">Created</th>
+              <th className="p-3">Received</th>
             </tr>
           </thead>
 

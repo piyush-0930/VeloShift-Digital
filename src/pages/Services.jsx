@@ -8,6 +8,12 @@ import {
   Rocket,
   CheckCircle,
   XCircle,
+  Globe,
+  Bot,
+  Cloud,
+  Plug,
+  Palette,
+  Layers,
 } from "lucide-react";
 
 export default function Services() {
@@ -15,6 +21,8 @@ export default function Services() {
   const targets = [40, 50, 99.9, 97];
 
   const [selectedService, setSelectedService] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null); // null | 'success' | 'error'
+  const [submitMessage, setSubmitMessage] = useState("");
 
   const [formData, setFormData] = useState({
     service: "",
@@ -45,6 +53,8 @@ export default function Services() {
 
   const handleOpenModal = (service) => {
     setSelectedService(service);
+    setSubmitStatus(null);
+    setSubmitMessage("");
     setFormData((prev) => ({
       ...prev,
       service: service.title,
@@ -64,8 +74,9 @@ export default function Services() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Quote submitted successfully 🚀");
-        setSelectedService(null);
+        setSubmitStatus("success");
+        setSubmitMessage("Thank you! Our team will get back to you shortly.");
+        setTimeout(() => { setSubmitStatus(null); setSubmitMessage(""); setSelectedService(null); }, 4000);
         setFormData({
           service: "",
           subService: "",
@@ -77,18 +88,22 @@ export default function Services() {
           customRequirement: "",
         });
       } else {
-        alert(data.message || "Something went wrong");
+        setSubmitStatus("error");
+        setSubmitMessage(data.message || "Something went wrong. Please try again.");
+        setTimeout(() => { setSubmitStatus(null); setSubmitMessage(""); }, 4000);
       }
     } catch (error) {
       console.error(error);
-      alert("Server error");
+      setSubmitStatus("error");
+      setSubmitMessage("Unable to reach the server. Please try again later.");
+      setTimeout(() => { setSubmitStatus(null); setSubmitMessage(""); }, 4000);
     }
   };
 
   const services = [
     {
       title: "Development",
-      icon: "ri-code-s-slash-line",
+      icon: <Globe size={32} />,
       items: [
         "Web Development",
         "Mobile App Development",
@@ -98,7 +113,7 @@ export default function Services() {
     },
     {
       title: "AI & Automation",
-      icon: "ri-robot-2-line",
+      icon: <Bot size={32} />,
       items: [
         "AI Chatbots",
         "Workflow Automation",
@@ -108,7 +123,7 @@ export default function Services() {
     },
     {
       title: "Cloud Services",
-      icon: "ri-cloud-line",
+      icon: <Cloud size={32} />,
       items: [
         "Cloud Deployment",
         "DevOps",
@@ -118,7 +133,7 @@ export default function Services() {
     },
     {
       title: "Tech Integrations",
-      icon: "ri-link-m",
+      icon: <Plug size={32} />,
       items: [
         "API Integration",
         "CRM Integration",
@@ -128,7 +143,7 @@ export default function Services() {
     },
     {
       title: "Design & Consulting",
-      icon: "ri-pen-nib-line",
+      icon: <Palette size={32} />,
       items: [
         "UI/UX Design",
         "IT Consulting",
@@ -138,7 +153,7 @@ export default function Services() {
     },
     {
       title: "SaaS & Platforms",
-      icon: "ri-stack-line",
+      icon: <Layers size={32} />,
       items: [
         "Multi-tenant SaaS",
         "Subscription Systems",
@@ -217,8 +232,8 @@ export default function Services() {
                          shadow-lg hover:shadow-indigo-500/10 flex flex-col justify-between"
             >
               <div>
-                <div className="text-4xl text-indigo-400 mb-4 group-hover:rotate-6 transition">
-                  <i className={srv.icon}></i>
+                <div className="text-indigo-400 mb-4 group-hover:rotate-6 transition">
+                  {srv.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-4">{srv.title}</h3>
                 <ul className="space-y-2 text-gray-300 mb-6">
@@ -414,16 +429,39 @@ export default function Services() {
                 />
               </div>
 
+              {/* Inline status message */}
+              {submitStatus && (
+                <div
+                  style={{
+                    padding: "12px 14px",
+                    borderRadius: "10px",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    background: submitStatus === "success" ? "rgba(74, 222, 128, 0.1)" : "rgba(248, 113, 113, 0.1)",
+                    border: `0.5px solid ${submitStatus === "success" ? "rgba(74, 222, 128, 0.3)" : "rgba(248, 113, 113, 0.3)"}`,
+                    color: submitStatus === "success" ? "#4ade80" : "#f87171",
+                  }}
+                >
+                  {submitStatus === "success"
+                    ? <CheckCircle size={16} />
+                    : <XCircle size={16} />}
+                  {submitMessage}
+                </div>
+              )}
+
               {/* Submit */}
-              <button
-                onClick={handleSubmit}
-                className="w-full rounded-lg py-3 font-semibold text-white text-sm transition hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #4f46e5, #7c3aed)", marginTop: "2px" }}
-              >
-                Submit Request
-              </button>
-
-
+              {submitStatus !== "success" && (
+                <button
+                  onClick={handleSubmit}
+                  className="w-full rounded-lg py-3 font-semibold text-white text-sm transition hover:opacity-90"
+                  style={{ background: "linear-gradient(135deg, #4f46e5, #7c3aed)", marginTop: "2px" }}
+                >
+                  Submit Request
+                </button>
+              )}
 
             </div>
           </div>

@@ -12,7 +12,7 @@ const faqData = [
   {
     category: "Work & Location",
     icon: "ri-time-line",
-    question: "What does a typical workday look like at Veloshift?",
+    question: "What does a typical workday look like at VeloShift?",
     answer:
       "We follow async-first communication with a couple of syncs per week. You'll have deep work blocks, collaborate on live projects, and ship real features — not just internal tools. We value outcomes over hours.",
   },
@@ -33,7 +33,7 @@ const faqData = [
   {
     category: "Tech & Growth",
     icon: "ri-stack-line",
-    question: "What tech stack does Veloshift work with?",
+    question: "What tech stack does VeloShift work with?",
     answer:
       "Our core stack includes React, Node.js, Python, MongoDB, and PostgreSQL on the frontend/backend. For infrastructure, we use AWS and Docker with CI/CD pipelines. AI work involves LLMs, vector databases, and various AI APIs.",
   },
@@ -54,7 +54,7 @@ const faqData = [
   {
     category: "Culture",
     icon: "ri-heart-line",
-    question: "How would you describe Veloshift's work culture?",
+    question: "How would you describe VeloShift's work culture?",
     answer:
       "We're a small, tight-knit team that moves fast without burning out. You'll have real ownership, minimal bureaucracy, and direct impact on products used by clients. We celebrate wins, learn from failures, and support each other.",
   },
@@ -101,7 +101,7 @@ export default function FAQ() {
           </span>
         </h2>
         <p className="mt-3 text-[var(--vs-light)]/60 max-w-xl mx-auto">
-          Everything you need to know before applying to Veloshift.
+          Everything you need to know before applying to VeloShift.
         </p>
       </div>
 

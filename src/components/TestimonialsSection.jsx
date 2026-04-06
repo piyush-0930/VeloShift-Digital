@@ -1,28 +1,32 @@
 import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 
+import review1 from "../assets/review-1.png";
+import review2 from "../assets/review-2.png";
+import review3 from "../assets/review-3.png";
+
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Rahul Mehta",
-      role: "CTO, NovaStack Technologies",
-      image: "https://i.pravatar.cc/150?img=1",
+      name: "Ankur Malhotra",
+      role: "Director, TRINITi Heights",
+      image: review1,
       message:
-        "Veloshift transformed our product with a modern full-stack architecture and seamless cloud deployment. Their engineering quality is unmatched.",
+        "VeloShift transformed our operations with a scalable digital platform, seamless integrations, and consistent performance improvements across every business workflow.",
     },
     {
-      name: "Ananya Verma",
-      role: "Product Manager, AeroSys Solutions",
-      image: "https://i.pravatar.cc/150?img=5",
+      name: "Himani Nirmal",
+      role: "HR Head, Archfin Professionals",
+      image: review2,
       message:
-        "Their AI automation workflows reduced manual operations drastically and improved our delivery speed. A trusted long-term tech partner.",
+        "Their automation systems streamlined our processes, improved efficiency, and reduced manual workload significantly while maintaining high accuracy and reliability standards.",
     },
     {
-      name: "Michael Lee",
-      role: "Head of Digital Innovation, Zenith Industries",
-      image: "https://i.pravatar.cc/150?img=3",
+      name: "Kushan Shrivastava",
+      role: "CEO, Digiphal Marketing",
+      image: review3,
       message:
-        "Veloshift’s API integrations and scalable cloud setup helped us unify multiple systems flawlessly. Highly reliable and extremely professional.",
+        "VeloShift delivered robust solutions with smooth integrations, scalable architecture, and reliable performance that helped us optimize and grow our digital ecosystem.",
     },
   ];
 
