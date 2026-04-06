@@ -59,7 +59,7 @@ export default function WhyChooseSection() {
         {/* TITLE */}
         <h2 className="text-3xl md:text-5xl font-extrabold text-white">
           Why Choose{" "}
-          <span className="text-[var(--vs-secondary)]">Veloshift Technology</span>
+          <span className="text-[var(--vs-secondary)]">VeloShift Technology</span>
         </h2>
 
         <div className="h-1 w-28 bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)]
