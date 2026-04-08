@@ -45,13 +45,6 @@ const faqData = [
       "Yes. We offer mentorship from senior engineers, access to paid courses and certifications (AWS, AI/ML, and more), internal knowledge-sharing sessions, and dedicated time for R&D exploration.",
   },
   {
-    category: "Compensation",
-    icon: "ri-money-rupee-circle-line",
-    question: "What does the compensation and growth structure look like?",
-    answer:
-      "We offer competitive, market-aligned pay with structured review cycles every 6 months. High performers are recognised early. Internships come with stipends and a clear pathway to full-time offers.",
-  },
-  {
     category: "Culture",
     icon: "ri-heart-line",
     question: "How would you describe VeloShift's work culture?",
@@ -66,7 +59,6 @@ const categoryColors = {
   "Work & Location": "from-blue-500 to-indigo-600",
   Hiring: "from-purple-500 to-violet-600",
   "Tech & Growth": "from-cyan-500 to-teal-600",
-  Compensation: "from-emerald-500 to-green-600",
   Culture: "from-pink-500 to-rose-600",
 };
 
@@ -74,7 +66,6 @@ const categoryBadge = {
   "Work & Location": "bg-blue-500/10 text-blue-400 border-blue-500/20",
   Hiring: "bg-purple-500/10 text-purple-400 border-purple-500/20",
   "Tech & Growth": "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
-  Compensation: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
   Culture: "bg-pink-500/10 text-pink-400 border-pink-500/20",
 };
 
@@ -144,9 +135,9 @@ export default function FAQ() {
               >
                 <div className="flex items-center gap-4 min-w-0">
                   <div
-                    className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br ${categoryColors[faq.category]} bg-opacity-10`}
+                    className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br ${categoryColors[faq.category]} shadow-md shadow-black/30 transition-all duration-300 hover:scale-105`}
                   >
-                    <i className={`${faq.icon} text-white text-base`}></i>
+                    <i className={`${faq.icon} text-white text-lg`}></i>
                   </div>
 
                   <div className="min-w-0">

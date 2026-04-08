@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import FAQ from "../components/FAQ";
+import careersImg from "../assets/careers.png";
 
 export default function Careers() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -113,7 +114,7 @@ export default function Careers() {
           {/* Right: image */}
           <div className="flex-1 flex justify-center">
             <img
-              src="/src/assets/careers.png"
+              src={careersImg}
               alt="Why Veloshift"
               className="w-full max-w-sm rounded-2xl object-cover"
             />
