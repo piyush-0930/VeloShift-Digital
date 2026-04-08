@@ -22,7 +22,7 @@ export default function AdminLayout() {
 
           <nav className="flex flex-col gap-2">
             <NavLink to="/admin/dashboard" className="nav-link">
-              Dashboard
+              Admin Dashboard
             </NavLink>
 
             <NavLink to="/admin/contacts" className="nav-link">
@@ -38,12 +38,17 @@ export default function AdminLayout() {
             </NavLink>
 
             <NavLink to="/admin/subscribers" className="nav-link">
-              Subscribers
+              Email Subscribers
             </NavLink>
 
             <NavLink to="/admin/leads" className="nav-link">
-              Leads Tracker
+              Client Management
             </NavLink>
+
+            <NavLink to="/admin/invoices" className="nav-link">
+              Invoice Management
+            </NavLink>
+
           </nav>
         </div>
 
