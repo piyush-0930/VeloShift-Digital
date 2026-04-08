@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
   const [form, setForm] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   function onChange(e) {
@@ -11,6 +12,7 @@ export default function AdminLogin() {
 
   async function onSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await fetch("https://veloshift-backend.onrender.com/api/admin/login", {
@@ -25,13 +27,47 @@ export default function AdminLogin() {
 
       if (res.ok) {
         localStorage.setItem("admin_token", data.token);
-        navigate("/admin/dashboard");
+
+        // ✅ SUCCESS TOAST (your system)
+        window.dispatchEvent(
+          new CustomEvent("vs_message", {
+            detail: {
+              type: "success",
+              title: "Login Successful",
+              text: "Welcome back, Admin 🚀"
+            }
+          })
+        );
+
+        setTimeout(() => {
+          navigate("/admin/dashboard");
+        }, 800);
+
       } else {
-        alert(data.message || "Login failed");
+        window.dispatchEvent(
+          new CustomEvent("vs_message", {
+            detail: {
+              type: "error",
+              title: "Login Failed",
+              text: data.message || "Invalid credentials"
+            }
+          })
+        );
       }
     } catch (err) {
       console.error(err);
-      alert("Server error");
+
+      window.dispatchEvent(
+        new CustomEvent("vs_message", {
+          detail: {
+            type: "error",
+            title: "Server Error",
+            text: "Please try again later"
+          }
+        })
+      );
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -52,6 +88,7 @@ export default function AdminLogin() {
             value={form.username}
             onChange={onChange}
             className="w-full p-3 rounded bg-transparent border border-white/10 text-white outline-none"
+            required
           />
 
           <input
@@ -61,13 +98,19 @@ export default function AdminLogin() {
             value={form.password}
             onChange={onChange}
             className="w-full p-3 rounded bg-transparent border border-white/10 text-white outline-none"
+            required
           />
 
           <button
             type="submit"
-            className="w-full py-3 rounded bg-[var(--admin-accent)] hover:opacity-90 transition text-white font-semibold"
+            disabled={loading}
+            className={`w-full py-3 rounded text-white font-semibold transition ${
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-[var(--admin-accent)] hover:opacity-90"
+            }`}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
