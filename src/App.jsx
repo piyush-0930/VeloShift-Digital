@@ -16,6 +16,7 @@ import CareersPage from "./admin/CareersPage";
 import ServicesPage from "./admin/ServicesPage";
 import SubscribersPage from "./admin/SubscribersPage";
 import ProtectedRoute from "./admin/ProtectedRoute";
+import LeadsPage from "./admin/LeadsPage";
 
 import TopBar from "./components/TopBar";
 import Navbar from "./components/Navbar";
@@ -65,6 +66,7 @@ function Layout() {
             <Route path="careers" element={<CareersPage />} />
             <Route path="services" element={<ServicesPage />} />
             <Route path="subscribers" element={<SubscribersPage />} />
+            <Route path="leads" element={<LeadsPage />} />
           </Route>
         </Routes>
       </div>

@@ -26,20 +26,23 @@ export default function AdminLayout() {
             </NavLink>
 
             <NavLink to="/admin/contacts" className="nav-link">
-              Contacts
+              Contact Inquiries
             </NavLink>
 
             <NavLink to="/admin/careers" className="nav-link">
-              Careers
+              Career Applications
             </NavLink>
 
             <NavLink to="/admin/services" className="nav-link">
-              Services
+              Service Requests
             </NavLink>
 
-            {/* ✅ NEW */}
             <NavLink to="/admin/subscribers" className="nav-link">
               Subscribers
+            </NavLink>
+
+            <NavLink to="/admin/leads" className="nav-link">
+              Leads Tracker
             </NavLink>
           </nav>
         </div>
