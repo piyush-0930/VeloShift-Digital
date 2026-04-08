@@ -113,7 +113,7 @@ export default function Careers() {
           {/* Right: image */}
           <div className="flex-1 flex justify-center">
             <img
-              src="/src/assets/cutbi.png"
+              src="/src/assets/careers.png"
               alt="Why Veloshift"
               className="w-full max-w-sm rounded-2xl object-cover"
             />
