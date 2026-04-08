@@ -2,25 +2,36 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
   function onChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
-    // ✅ FIXED LOGIN CHECK
-    if (
-      form.email.trim().toLowerCase() === "admin@veloshift.com" &&
-      form.password.trim() === "admin123"
-    ) {
-      localStorage.setItem("admin_token", "dummy_token");
-      navigate("/admin/dashboard");
-    } else {
-      alert("Invalid credentials");
+    try {
+      const res = await fetch("https://veloshift-backend.onrender.com/api/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("admin_token", data.token);
+        navigate("/admin/dashboard");
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
     }
   }
 
@@ -35,10 +46,10 @@ export default function AdminLogin() {
         <form onSubmit={onSubmit} className="space-y-4">
           
           <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={form.email}
+            name="username"
+            type="text"
+            placeholder="Username"
+            value={form.username}
             onChange={onChange}
             className="w-full p-3 rounded bg-transparent border border-white/10 text-white outline-none"
           />
