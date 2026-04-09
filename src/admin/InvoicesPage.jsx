@@ -6,24 +6,43 @@ import InvoiceTemplate from "../components/InvoiceTemplate";
 export default function InvoicesPage() {
   const [invoices, setInvoices] = useState([]);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [loadingId, setLoadingId] = useState(null);
 
-  const [loadingId, setLoadingId] = useState(null); // 🔥 NEW
+  const [form, setForm] = useState({
+    client: "",
+    amount: "",
+    notes: "",
+    gst: 0,
+    dueDate: "",
+  });
 
   const invoiceRef = useRef();
-
   const API = "https://veloshift-backend.onrender.com/api/invoices";
 
-  // FETCH (FIXED)
+  // 🔥 PREFILL FROM LEADS
+  useEffect(() => {
+    const saved = localStorage.getItem("prefillInvoice");
+    if (saved) {
+      const data = JSON.parse(saved);
+      setForm({
+        client: data.client || "",
+        amount: data.amount || "",
+        notes: data.notes || "",
+        gst: 0,
+        dueDate: "",
+      });
+      localStorage.removeItem("prefillInvoice");
+    }
+  }, []);
+
+  // FETCH
   const fetchInvoices = async () => {
     try {
       const res = await fetch(API);
-
       if (!res.ok) throw new Error("Failed to fetch invoices");
-
       const data = await res.json();
       setInvoices(data);
     } catch (err) {
-      console.error(err);
       alert(err.message);
     }
   };
@@ -32,7 +51,53 @@ export default function InvoicesPage() {
     fetchInvoices();
   }, []);
 
-  // ✅ TOGGLE STATUS (FIXED)
+  // 🔥 CREATE INVOICE
+  const handleCreateInvoice = async (e) => {
+    e.preventDefault();
+
+    if (!form.client || !form.amount) {
+      return alert("Client & Amount required");
+    }
+
+    if (form.gst > 100) {
+      return alert("GST cannot exceed 100%");
+    }
+
+    try {
+      const res = await fetch(API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          client: form.client,
+          amount: Number(form.amount),
+          gst: Number(form.gst),
+          dueDate: form.dueDate || null,
+          notes: form.notes,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      alert("Invoice created ✅");
+
+      setForm({
+        client: "",
+        amount: "",
+        notes: "",
+        gst: 0,
+        dueDate: "",
+      });
+
+      fetchInvoices();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // TOGGLE STATUS
   const toggleStatus = async (inv) => {
     const newStatus = inv.status === "paid" ? "unpaid" : "paid";
 
@@ -46,65 +111,53 @@ export default function InvoicesPage() {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.message);
 
       fetchInvoices();
     } catch (err) {
-      console.error(err);
       alert(err.message);
     } finally {
       setLoadingId(null);
     }
   };
 
-  // ✅ DELETE (FIXED)
+  // DELETE
   const deleteInvoice = async (id) => {
     try {
       setLoadingId(id);
 
       const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
 
       fetchInvoices();
     } catch (err) {
-      console.error(err);
       alert(err.message);
     } finally {
       setLoadingId(null);
     }
   };
 
-  // 🔥 PDF GENERATION (FIXED PROPERLY)
+  // PDF
   const downloadPDF = async (invoice) => {
     try {
       setLoadingId(invoice._id);
       setSelectedInvoice(invoice);
 
-      // wait for React render
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      if (!invoiceRef.current) throw new Error("Template not ready");
-
-      const canvas = await html2canvas(invoiceRef.current, {
-        scale: 2,
-      });
-
+      const canvas = await html2canvas(invoiceRef.current, { scale: 2 });
       const imgData = canvas.toDataURL("image/png");
 
       const pdf = new jsPDF("p", "mm", "a4");
-
       const imgWidth = 210;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
       pdf.save(`invoice-${invoice.invoiceNumber}.pdf`);
     } catch (err) {
-      console.error(err);
-      alert("Failed to generate PDF");
+      alert("PDF failed");
     } finally {
       setLoadingId(null);
     }
@@ -124,16 +177,62 @@ export default function InvoicesPage() {
 
       {/* DASHBOARD */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        <Card title="Total Invoices" value={stats.total} color="bg-white/10" />
-        <Card title="Revenue" value={`₹${stats.revenue}`} color="bg-green-500/20" />
-        <Card title="Paid" value={stats.paid} color="bg-blue-500/20" />
+        <Card title="Total Invoices" value={stats.total} />
+        <Card title="Revenue" value={`₹${stats.revenue}`} />
+        <Card title="Paid" value={stats.paid} />
       </div>
 
+      {/* FORM */}
+      <form onSubmit={handleCreateInvoice} className="mb-6 grid md:grid-cols-5 gap-3">
+        <input
+          placeholder="Client"
+          value={form.client}
+          onChange={(e) => setForm({ ...form, client: e.target.value })}
+          className="px-3 py-2 rounded border"
+        />
+
+        <input
+          type="number"
+          placeholder="Amount"
+          value={form.amount}
+          onChange={(e) => setForm({ ...form, amount: e.target.value })}
+          className="px-3 py-2 rounded border"
+        />
+
+        <input
+          type="number"
+          placeholder="GST %"
+          min="0"
+          max="100"
+          value={form.gst}
+          onChange={(e) => setForm({ ...form, gst: e.target.value })}
+          className="px-3 py-2 rounded border"
+        />
+
+        <input
+          type="date"
+          value={form.dueDate}
+          onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
+          className="px-3 py-2 rounded border"
+        />
+
+        <input
+          placeholder="Notes"
+          value={form.notes}
+          onChange={(e) => setForm({ ...form, notes: e.target.value })}
+          className="px-3 py-2 rounded border"
+        />
+
+        <button className="col-span-5 bg-blue-600 text-white py-2 rounded">
+          Create Invoice
+        </button>
+      </form>
+
       {/* TABLE */}
-      <div className="overflow-x-auto border border-white/10 rounded-xl">
+      <div className="overflow-x-auto border rounded-xl">
         <table className="w-full text-sm">
-          <thead className="bg-[var(--admin-card)]">
-            <tr className="text-left">
+          <thead>
+            <tr>
               <th className="p-3">Invoice #</th>
               <th className="p-3">Client</th>
               <th className="p-3">Total</th>
@@ -145,53 +244,19 @@ export default function InvoicesPage() {
 
           <tbody>
             {invoices.map((inv) => (
-              <tr key={inv._id} className="border-t border-white/10 hover:bg-white/5">
+              <tr key={inv._id}>
                 <td className="p-3">{inv.invoiceNumber}</td>
                 <td className="p-3">{inv.client}</td>
-                <td className="p-3 font-semibold">₹{inv.totalAmount}</td>
-
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded text-xs ${
-                      inv.status === "paid"
-                        ? "bg-green-500/20 text-green-400"
-                        : "bg-yellow-500/20 text-yellow-400"
-                    }`}
-                  >
-                    {inv.status}
-                  </span>
-                </td>
-
+                <td className="p-3">₹{inv.totalAmount}</td>
+                <td className="p-3">{inv.status}</td>
                 <td className="p-3">{fmt(inv.createdAt)}</td>
 
-                <td className="p-3 flex gap-1">
-                  <button
-                    disabled={loadingId === inv._id}
-                    onClick={() => toggleStatus(inv)}
-                    className="bg-indigo-500 px-2 py-1 rounded text-xs"
-                  >
-                    {loadingId === inv._id
-                      ? "Processing..."
-                      : inv.status === "paid"
-                      ? "Mark Unpaid"
-                      : "Mark Paid"}
+                <td className="p-3 flex gap-2">
+                  <button onClick={() => toggleStatus(inv)}>
+                    {inv.status === "paid" ? "Unpaid" : "Paid"}
                   </button>
-
-                  <button
-                    disabled={loadingId === inv._id}
-                    onClick={() => downloadPDF(inv)}
-                    className="bg-green-500 px-2 py-1 rounded text-xs"
-                  >
-                    {loadingId === inv._id ? "Generating..." : "PDF"}
-                  </button>
-
-                  <button
-                    disabled={loadingId === inv._id}
-                    onClick={() => deleteInvoice(inv._id)}
-                    className="bg-red-500 px-2 py-1 rounded text-xs"
-                  >
-                    {loadingId === inv._id ? "Deleting..." : "Delete"}
-                  </button>
+                  <button onClick={() => downloadPDF(inv)}>PDF</button>
+                  <button onClick={() => deleteInvoice(inv._id)}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -200,7 +265,7 @@ export default function InvoicesPage() {
       </div>
 
       {/* HIDDEN TEMPLATE */}
-      <div className="absolute -left-[9999px] top-0">
+      <div className="absolute -left-[9999px]">
         {selectedInvoice && (
           <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />
         )}
@@ -209,10 +274,10 @@ export default function InvoicesPage() {
   );
 }
 
-function Card({ title, value, color }) {
+function Card({ title, value }) {
   return (
-    <div className={`p-4 rounded-xl border border-white/10 ${color}`}>
-      <p className="text-sm text-white/60">{title}</p>
+    <div className="p-4 rounded-xl border">
+      <p className="text-sm">{title}</p>
       <h3 className="text-xl font-bold">{value}</h3>
     </div>
   );

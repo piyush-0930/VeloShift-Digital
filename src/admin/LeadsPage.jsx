@@ -8,71 +8,70 @@ export default function LeadsPage() {
 
   const [editingLead, setEditingLead] = useState(null);
 
-  // 🔥 NEW STATE (for duplicate prevention)
-  const [loadingInvoiceId, setLoadingInvoiceId] = useState(null);
-
   const [form, setForm] = useState({
     client: "",
     poc: "",
-    durationValue: "",
-    durationUnit: "months",
+    duration: "",
     amount: "",
     projectStatus: "",
     paymentStatus: "",
-    paymentDate: "",
     notes: "",
   });
 
   const API = "https://veloshift-backend.onrender.com/api/leads";
 
-  // 🔥 FIXED CREATE INVOICE
-  const generateInvoice = async (lead) => {
-    try {
-      setLoadingInvoiceId(lead._id);
-
-      const res = await fetch("https://veloshift-backend.onrender.com/api/invoices", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          leadId: lead._id,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to create invoice");
-      }
-
-      alert("Invoice created 🚀");
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    } finally {
-      setLoadingInvoiceId(null);
+  // ✅ FORMAT DURATION
+  const formatDuration = (duration) => {
+    if (!duration) return "-";
+    if (typeof duration === "object") {
+      return `${duration.value || ""} ${duration.unit || ""}`.trim();
     }
+    return duration;
   };
 
-  // 🔥 FIXED FETCH
+  // ✅ EXPORT CSV
+  const exportCSV = () => {
+    const headers = [
+      "Client",
+      "POC",
+      "Duration",
+      "Amount",
+      "Project Status",
+      "Payment Status",
+      "Notes",
+    ];
+
+    const rows = leads.map((l) => [
+      l.client,
+      l.poc || "",
+      formatDuration(l.duration),
+      l.amount,
+      l.projectStatus,
+      l.paymentStatus,
+      l.notes || "",
+    ]);
+
+    const csv =
+      "data:text/csv;charset=utf-8," +
+      [headers, ...rows].map((r) => r.join(",")).join("\n");
+
+    const link = document.createElement("a");
+    link.href = encodeURI(csv);
+    link.download = "leads.csv";
+    link.click();
+  };
+
   const fetchLeads = async () => {
     try {
       let url = `${API}?page=${page}&limit=50`;
-
       if (filter !== "all") url += `&projectStatus=${filter}`;
       if (search) url += `&search=${search}`;
 
       const res = await fetch(url);
-
-      if (!res.ok) throw new Error("Failed to fetch leads");
-
       const data = await res.json();
-
       setLeads(data.data || []);
     } catch (err) {
       console.error(err);
-      alert(err.message);
     }
   };
 
@@ -88,85 +87,66 @@ export default function LeadsPage() {
     setForm({
       client: "",
       poc: "",
-      durationValue: "",
-      durationUnit: "months",
+      duration: "",
       amount: "",
       projectStatus: "",
       paymentStatus: "",
-      paymentDate: "",
       notes: "",
     });
   };
 
-  // CREATE / UPDATE
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.client || !form.amount) {
-      alert("Client & Amount required");
+    if (!form.client || !form.amount || !form.duration) {
+      alert("Client, Amount & Duration required");
       return;
     }
 
     const payload = {
-      client: form.client,
-      poc: form.poc,
+      ...form,
       amount: Number(form.amount),
       projectStatus: form.projectStatus || "prospect",
       paymentStatus: form.paymentStatus || "pending",
-      paymentDate: form.paymentDate || null,
-      notes: form.notes,
-      duration: form.durationValue
-        ? {
-            value: Number(form.durationValue),
-            unit: form.durationUnit,
-          }
-        : undefined,
     };
 
-    try {
-      if (editingLead) {
-        await fetch(`${API}/${editingLead._id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-      } else {
-        await fetch(API, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-      }
-
-      setEditingLead(null);
-      resetForm();
-      fetchLeads();
-    } catch (err) {
-      console.error(err);
+    if (editingLead) {
+      await fetch(`${API}/${editingLead._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } else {
+      await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
     }
+
+    setEditingLead(null);
+    resetForm();
+    fetchLeads();
   };
 
   const handleEdit = (lead) => {
     setEditingLead(lead);
     setForm({
-      client: lead.client,
+      client: lead.client || "",
       poc: lead.poc || "",
-      durationValue: lead.duration?.value || "",
-      durationUnit: lead.duration?.unit || "months",
-      amount: lead.amount,
-      projectStatus: lead.projectStatus,
-      paymentStatus: lead.paymentStatus,
-      paymentDate: lead.paymentDate?.split("T")[0] || "",
+      duration: formatDuration(lead.duration),
+      amount: lead.amount || "",
+      projectStatus: lead.projectStatus || "",
+      paymentStatus: lead.paymentStatus || "",
       notes: lead.notes || "",
     });
   };
 
   const deleteLead = async (id) => {
+    if (!window.confirm("Delete this lead?")) return;
     await fetch(`${API}/${id}`, { method: "DELETE" });
     fetchLeads();
   };
-
-  const fmt = (d) => (d ? new Date(d).toLocaleDateString() : "-");
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -187,55 +167,22 @@ export default function LeadsPage() {
     pending: leads.filter((l) => l.paymentStatus !== "paid").length,
   };
 
-  const exportCSV = () => {
-    if (!leads.length) return alert("No data");
-
-    const headers = ["Client","POC","Duration","Amount","Project Status","Payment Status","Payment Date","Notes"];
-
-    const rows = leads.map((l) => [
-      l.client,
-      l.poc,
-      l.duration ? `${l.duration.value} ${l.duration.unit}` : "",
-      l.amount,
-      l.projectStatus,
-      l.paymentStatus,
-      l.paymentDate,
-      l.notes,
-    ]);
-
-    const csv =
-      "data:text/csv;charset=utf-8," +
-      [headers, ...rows].map((r) => r.join(",")).join("\n");
-
-    const link = document.createElement("a");
-    link.href = encodeURI(csv);
-    link.download = "leads.csv";
-    link.click();
-  };
-
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Leads Tracker</h1>
 
       {/* DASHBOARD */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        <Card title="Total Leads" value={stats.total} color="bg-white/10" />
-        <Card title="Revenue" value={`₹${stats.revenue}`} color="bg-blue-500/20" />
-        <Card title="Pending Payments" value={stats.pending} color="bg-yellow-500/20" />
+        <Card title="Total" value={stats.total} color="bg-white/10" />
+        <Card title="Revenue" value={`₹${stats.revenue}`} color="bg-green-500/20" />
+        <Card title="Pending" value={stats.pending} color="bg-yellow-500/20" />
       </div>
 
-      {/* FORM */}
+      {/* FORM (🔥 BACK ADDED) */}
       <form onSubmit={handleSubmit} className="grid md:grid-cols-4 gap-3 mb-6">
         <Input name="client" value={form.client} onChange={handleChange} placeholder="Client" />
         <Input name="poc" value={form.poc} onChange={handleChange} placeholder="POC" />
-        <Input name="durationValue" value={form.durationValue} onChange={handleChange} placeholder="Duration" />
-
-        <Select name="durationUnit" value={form.durationUnit} onChange={handleChange}>
-          <option value="days">Days</option>
-          <option value="weeks">Weeks</option>
-          <option value="months">Months</option>
-        </Select>
-
+        <Input name="duration" value={form.duration} onChange={handleChange} placeholder="10 Jan - 1 Feb" />
         <Input name="amount" value={form.amount} onChange={handleChange} type="number" placeholder="Amount" />
 
         <Select name="projectStatus" value={form.projectStatus} onChange={handleChange}>
@@ -248,11 +195,10 @@ export default function LeadsPage() {
         <Select name="paymentStatus" value={form.paymentStatus} onChange={handleChange}>
           <option value="">Payment Status</option>
           <option value="pending">Pending</option>
-          <option value="overdue">Overdue</option>
+          <option value="partial">Partial</option>
           <option value="paid">Paid</option>
         </Select>
 
-        <Input name="paymentDate" value={form.paymentDate} onChange={handleChange} type="date" />
         <Input name="notes" value={form.notes} onChange={handleChange} placeholder="Notes" />
 
         <button className="col-span-4 px-3 py-2 bg-indigo-500 rounded text-sm">
@@ -260,14 +206,13 @@ export default function LeadsPage() {
         </button>
       </form>
 
-      {/* SEARCH + FILTER + CSV */}
-      <div className="mb-4 flex flex-col md:flex-row gap-3 md:justify-between">
+      {/* SERVICES STYLE FILTER BAR */}
+      <div className="mb-4 flex flex-col md:flex-row gap-3 md:justify-between md:items-center">
         <h2 className="text-lg font-semibold">Leads</h2>
 
         <div className="flex gap-2 flex-wrap">
           <input
-            type="text"
-            placeholder="Search client..."
+            placeholder="Search client or POC..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="px-3 py-2 rounded border border-white/20 bg-[#0b1324] text-white text-sm"
@@ -284,7 +229,10 @@ export default function LeadsPage() {
             <option value="completed">Completed</option>
           </select>
 
-          <button onClick={exportCSV} className="px-3 py-2 bg-indigo-500 rounded text-sm">
+          <button
+            onClick={exportCSV}
+            className="px-3 py-2 bg-indigo-500 rounded text-sm"
+          >
             Export CSV
           </button>
         </div>
@@ -299,59 +247,50 @@ export default function LeadsPage() {
               <th className="p-3">POC</th>
               <th className="p-3">Duration</th>
               <th className="p-3">Amount</th>
-              <th className="p-3">Status</th>
+              <th className="p-3">Project</th>
               <th className="p-3">Payment</th>
-              <th className="p-3">Payment Date</th>
               <th className="p-3">Notes</th>
+              <th className="p-3">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {leads.map((l) => (
-              <tr key={l._id} className="border-t border-white/10 hover:bg-white/5">
-                <td className="p-3">{l.client}</td>
-                <td className="p-3">{l.poc || "-"}</td>
-
-                <td className="p-3">
-                  {l.duration ? `${l.duration.value} ${l.duration.unit}` : "-"}
-                </td>
-
-                <td className="p-3">₹{l.amount}</td>
-
-                <td className="p-3">
-                  <span className={`px-2 py-1 rounded text-xs ${getStatusColor(l.projectStatus)}`}>
-                    {l.projectStatus}
-                  </span>
-                </td>
-
-                <td className="p-3">{l.paymentStatus}</td>
-                <td className="p-3">{fmt(l.paymentDate)}</td>
-
-                <td className="p-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="truncate">{l.notes || "-"}</span>
-
-                    <div className="flex gap-1">
-                      <button onClick={() => handleEdit(l)} className="bg-blue-500 px-2 py-1 rounded text-xs">
-                        Edit
-                      </button>
-
-                      <button onClick={() => deleteLead(l._id)} className="bg-red-500 px-2 py-1 rounded text-xs">
-                        Delete
-                      </button>
-
-                      <button
-                        disabled={loadingInvoiceId === l._id}
-                        onClick={() => generateInvoice(l)}
-                        className="bg-green-500 px-2 py-1 rounded text-xs"
-                      >
-                        {loadingInvoiceId === l._id ? "Creating..." : "Invoice"}
-                      </button>
-                    </div>
-                  </div>
+            {leads.length === 0 ? (
+              <tr>
+                <td colSpan="8" className="p-6 text-center text-white/60">
+                  No leads found
                 </td>
               </tr>
-            ))}
+            ) : (
+              leads.map((l) => (
+                <tr key={l._id} className="border-t border-white/10 hover:bg-white/5">
+                  <td className="p-3">{l.client}</td>
+                  <td className="p-3">{l.poc || "-"}</td>
+                  <td className="p-3">{formatDuration(l.duration)}</td>
+                  <td className="p-3">₹{l.amount}</td>
+                  <td className="p-3">
+                    <span className={`px-2 py-1 rounded text-xs ${getStatusColor(l.projectStatus)}`}>
+                      {l.projectStatus}
+                    </span>
+                  </td>
+                  <td className="p-3">
+                    <span className="px-2 py-1 rounded text-xs bg-white/10">
+                      {l.paymentStatus}
+                    </span>
+                  </td>
+                  <td className="p-3">{l.notes || "-"}</td>
+
+                  <td className="p-3 flex gap-2">
+                    <button onClick={() => handleEdit(l)} className="bg-indigo-500 px-2 py-1 rounded text-xs">
+                      Edit
+                    </button>
+                    <button onClick={() => deleteLead(l._id)} className="bg-red-500 px-2 py-1 rounded text-xs">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -359,6 +298,7 @@ export default function LeadsPage() {
   );
 }
 
+// UI
 function Input(props) {
   return <input {...props} className="px-3 py-2 rounded border border-white/20 bg-[#0b1324] text-white text-sm" />;
 }
