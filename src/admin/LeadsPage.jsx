@@ -8,6 +8,9 @@ export default function LeadsPage() {
 
   const [editingLead, setEditingLead] = useState(null);
 
+  // 🔥 NEW STATE (for duplicate prevention)
+  const [loadingInvoiceId, setLoadingInvoiceId] = useState(null);
+
   const [form, setForm] = useState({
     client: "",
     poc: "",
@@ -22,10 +25,12 @@ export default function LeadsPage() {
 
   const API = "https://veloshift-backend.onrender.com/api/leads";
 
-  // 🔥 CREATE INVOICE
+  // 🔥 FIXED CREATE INVOICE
   const generateInvoice = async (lead) => {
     try {
-      await fetch("https://veloshift-backend.onrender.com/api/invoices", {
+      setLoadingInvoiceId(lead._id);
+
+      const res = await fetch("https://veloshift-backend.onrender.com/api/invoices", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,14 +40,22 @@ export default function LeadsPage() {
         }),
       });
 
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to create invoice");
+      }
+
       alert("Invoice created 🚀");
     } catch (err) {
       console.error(err);
-      alert("Error creating invoice");
+      alert(err.message);
+    } finally {
+      setLoadingInvoiceId(null);
     }
   };
 
-  // FETCH
+  // 🔥 FIXED FETCH
   const fetchLeads = async () => {
     try {
       let url = `${API}?page=${page}&limit=50`;
@@ -51,11 +64,15 @@ export default function LeadsPage() {
       if (search) url += `&search=${search}`;
 
       const res = await fetch(url);
+
+      if (!res.ok) throw new Error("Failed to fetch leads");
+
       const data = await res.json();
 
       setLeads(data.data || []);
     } catch (err) {
       console.error(err);
+      alert(err.message);
     }
   };
 
@@ -323,8 +340,12 @@ export default function LeadsPage() {
                         Delete
                       </button>
 
-                      <button onClick={() => generateInvoice(l)} className="bg-green-500 px-2 py-1 rounded text-xs">
-                        Invoice
+                      <button
+                        disabled={loadingInvoiceId === l._id}
+                        onClick={() => generateInvoice(l)}
+                        className="bg-green-500 px-2 py-1 rounded text-xs"
+                      >
+                        {loadingInvoiceId === l._id ? "Creating..." : "Invoice"}
                       </button>
                     </div>
                   </div>

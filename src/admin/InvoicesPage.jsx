@@ -7,18 +7,24 @@ export default function InvoicesPage() {
   const [invoices, setInvoices] = useState([]);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
 
+  const [loadingId, setLoadingId] = useState(null); // 🔥 NEW
+
   const invoiceRef = useRef();
 
   const API = "https://veloshift-backend.onrender.com/api/invoices";
 
-  // FETCH
+  // FETCH (FIXED)
   const fetchInvoices = async () => {
     try {
       const res = await fetch(API);
+
+      if (!res.ok) throw new Error("Failed to fetch invoices");
+
       const data = await res.json();
       setInvoices(data);
     } catch (err) {
       console.error(err);
+      alert(err.message);
     }
   };
 
@@ -26,43 +32,65 @@ export default function InvoicesPage() {
     fetchInvoices();
   }, []);
 
-  // ✅ TOGGLE STATUS
+  // ✅ TOGGLE STATUS (FIXED)
   const toggleStatus = async (inv) => {
     const newStatus = inv.status === "paid" ? "unpaid" : "paid";
 
     try {
-      await fetch(`${API}/${inv._id}`, {
+      setLoadingId(inv._id);
+
+      const res = await fetch(`${API}/${inv._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
       });
 
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message);
+
       fetchInvoices();
     } catch (err) {
       console.error(err);
+      alert(err.message);
+    } finally {
+      setLoadingId(null);
     }
   };
 
-  // ✅ DELETE
+  // ✅ DELETE (FIXED)
   const deleteInvoice = async (id) => {
     try {
-      await fetch(`${API}/${id}`, { method: "DELETE" });
+      setLoadingId(id);
+
+      const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message);
+
       fetchInvoices();
     } catch (err) {
       console.error(err);
+      alert(err.message);
+    } finally {
+      setLoadingId(null);
     }
   };
 
-  // 🔥 PDF GENERATION (FIXED)
+  // 🔥 PDF GENERATION (FIXED PROPERLY)
   const downloadPDF = async (invoice) => {
-    setSelectedInvoice(invoice);
+    try {
+      setLoadingId(invoice._id);
+      setSelectedInvoice(invoice);
 
-    // wait for render
-    setTimeout(async () => {
-      if (!invoiceRef.current) return;
+      // wait for React render
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      if (!invoiceRef.current) throw new Error("Template not ready");
 
       const canvas = await html2canvas(invoiceRef.current, {
-        scale: 2, // better quality
+        scale: 2,
       });
 
       const imgData = canvas.toDataURL("image/png");
@@ -74,7 +102,12 @@ export default function InvoicesPage() {
 
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
       pdf.save(`invoice-${invoice.invoiceNumber}.pdf`);
-    }, 300);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to generate PDF");
+    } finally {
+      setLoadingId(null);
+    }
   };
 
   const fmt = (d) => (d ? new Date(d).toLocaleDateString() : "-");
@@ -132,26 +165,32 @@ export default function InvoicesPage() {
                 <td className="p-3">{fmt(inv.createdAt)}</td>
 
                 <td className="p-3 flex gap-1">
-                  {/* 🔥 SMART BUTTON */}
                   <button
+                    disabled={loadingId === inv._id}
                     onClick={() => toggleStatus(inv)}
                     className="bg-indigo-500 px-2 py-1 rounded text-xs"
                   >
-                    {inv.status === "paid" ? "Mark Unpaid" : "Mark Paid"}
+                    {loadingId === inv._id
+                      ? "Processing..."
+                      : inv.status === "paid"
+                      ? "Mark Unpaid"
+                      : "Mark Paid"}
                   </button>
 
                   <button
+                    disabled={loadingId === inv._id}
                     onClick={() => downloadPDF(inv)}
                     className="bg-green-500 px-2 py-1 rounded text-xs"
                   >
-                    PDF
+                    {loadingId === inv._id ? "Generating..." : "PDF"}
                   </button>
 
                   <button
+                    disabled={loadingId === inv._id}
                     onClick={() => deleteInvoice(inv._id)}
                     className="bg-red-500 px-2 py-1 rounded text-xs"
                   >
-                    Delete
+                    {loadingId === inv._id ? "Deleting..." : "Delete"}
                   </button>
                 </td>
               </tr>
@@ -160,7 +199,7 @@ export default function InvoicesPage() {
         </table>
       </div>
 
-      {/* 🔥 HIDDEN TEMPLATE (IMPORTANT) */}
+      {/* HIDDEN TEMPLATE */}
       <div className="absolute -left-[9999px] top-0">
         {selectedInvoice && (
           <InvoiceTemplate ref={invoiceRef} invoice={selectedInvoice} />
