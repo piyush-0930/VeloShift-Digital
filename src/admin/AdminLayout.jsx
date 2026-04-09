@@ -44,11 +44,6 @@ export default function AdminLayout() {
             <NavLink to="/admin/leads" className="nav-link">
               Client Management
             </NavLink>
-
-            <NavLink to="/admin/invoices" className="nav-link">
-              Invoice Management
-            </NavLink>
-
           </nav>
         </div>
 
