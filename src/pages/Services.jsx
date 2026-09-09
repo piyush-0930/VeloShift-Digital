@@ -18,9 +18,10 @@ import {
   Layers,
 } from "lucide-react";
 
+const TARGETS = [40, 50, 99.9, 97];
+
 export default function Services() {
   const [counts, setCounts] = useState([0, 0, 0, 0]);
-  const targets = [40, 50, 99.9, 97];
 
   const [selectedService, setSelectedService] = useState(null);
   const [submitStatus, setSubmitStatus] = useState(null); // null | 'success' | 'error'
@@ -41,7 +42,7 @@ export default function Services() {
     const interval = setInterval(() => {
       setCounts((prev) =>
         prev.map((val, i) => {
-          const target = targets[i];
+          const target = TARGETS[i];
           if (val < target) {
             return +(val + target / 50).toFixed(1);
           }
