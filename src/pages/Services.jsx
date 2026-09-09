@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { post } from "../utils/api";
+
 import {
   Search,
   LayoutDashboard,
@@ -63,19 +65,11 @@ export default function Services() {
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch("https://veloshift-backend.onrender.com/api/quotes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const data = await post("/api/quotes", formData, false);
 
-      const data = await res.json();
-
-      if (data.success) {
+      if (data && data.success) {
         setSubmitStatus("success");
-        setSubmitMessage("Thank you! Our team will get back to you shortly.");
+        setSubmitMessage(data.message || "Thank you! Our team will get back to you shortly.");
         setTimeout(() => { setSubmitStatus(null); setSubmitMessage(""); setSelectedService(null); }, 4000);
         setFormData({
           service: "",
@@ -89,11 +83,11 @@ export default function Services() {
         });
       } else {
         setSubmitStatus("error");
-        setSubmitMessage(data.message || "Something went wrong. Please try again.");
+        setSubmitMessage(data?.message || "Something went wrong. Please try again.");
         setTimeout(() => { setSubmitStatus(null); setSubmitMessage(""); }, 4000);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Quote submission error:", error);
       setSubmitStatus("error");
       setSubmitMessage("Unable to reach the server. Please try again later.");
       setTimeout(() => { setSubmitStatus(null); setSubmitMessage(""); }, 4000);
@@ -363,11 +357,12 @@ export default function Services() {
                 <select
                   className="w-full rounded-lg text-white text-sm"
                   style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
+                  value={formData.subService}
                   onChange={(e) => setFormData({ ...formData, subService: e.target.value })}
                 >
-                  <option>Select a sub-service</option>
+                  <option value="">Select a sub-service</option>
                   {selectedService.items.map((item, i) => (
-                    <option key={i}>{item}</option>
+                    <option key={i} value={item}>{item}</option>
                   ))}
                 </select>
               </div>
@@ -378,6 +373,7 @@ export default function Services() {
                   <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Name</label>
                   <input
                     placeholder="John Doe"
+                    value={formData.name}
                     className="w-full rounded-lg text-white text-sm"
                     style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -387,6 +383,7 @@ export default function Services() {
                   <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Company</label>
                   <input
                     placeholder="Acme Inc."
+                    value={formData.company}
                     className="w-full rounded-lg text-white text-sm"
                     style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -399,7 +396,9 @@ export default function Services() {
                 <div>
                   <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Email</label>
                   <input
+                    type="email"
                     placeholder="you@email.com"
+                    value={formData.email}
                     className="w-full rounded-lg text-white text-sm"
                     style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -409,9 +408,18 @@ export default function Services() {
                   <label style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: "5px" }}>Phone</label>
                   <input
                     placeholder="+91 98765 43210"
+                    value={formData.phone}
                     className="w-full rounded-lg text-white text-sm"
                     style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
-                    onKeyDown={(e) => { const a=["Backspace","Delete","ArrowLeft","ArrowRight","Tab"]; if (!/[\d+\-\s]/.test(e.key) && !a.includes(e.key)) e.preventDefault(); }} onChange={(e) => { const v=e.target.value.replace(/[^\d+\-\s]/g,""); e.target.value=v; setFormData({...formData,phone:v}); }}
+                    onKeyDown={(e) => {
+                      if (e.ctrlKey || e.metaKey) return;
+                      const a = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End"];
+                      if (!/[\d+\-\s]/.test(e.key) && !a.includes(e.key)) e.preventDefault();
+                    }}
+                    onChange={(e) => {
+                      const v = e.target.value.replace(/[^\d+\-\s]/g, "");
+                      setFormData({ ...formData, phone: v });
+                    }}
                   />
                 </div>
               </div>
@@ -423,9 +431,18 @@ export default function Services() {
                 </label>
                 <input
                   placeholder="e.g. 4:30AM or 5:00PM"
+                  value={formData.preferredTime}
                   className="w-full rounded-lg text-white text-sm"
                   style={{ background: "#0B1220", border: "0.5px solid rgba(255,255,255,0.12)", padding: "10px 12px" }}
-                  onKeyDown={(e) => { const a=["Backspace","Delete","ArrowLeft","ArrowRight","Tab"]; if (!/[\d:aApPmM]/.test(e.key) && !a.includes(e.key)) e.preventDefault(); }} onChange={(e) => { const v=e.target.value.replace(/[^0-9:aApPmM]/g,""); e.target.value=v; setFormData({...formData,preferredTime:v}); }}
+                  onKeyDown={(e) => {
+                    if (e.ctrlKey || e.metaKey) return;
+                    const a = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab", "Home", "End", " "];
+                    if (!/[\d:aApPmM\s]/.test(e.key) && !a.includes(e.key)) e.preventDefault();
+                  }}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9:aApPmM\s]/g, "");
+                    setFormData({ ...formData, preferredTime: v });
+                  }}
                 />
               </div>
 

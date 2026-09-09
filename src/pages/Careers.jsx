@@ -1,73 +1,34 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import FAQ from "../components/FAQ";
 import careersImg from "../assets/careers.png";
+import { API_BASE, get } from "../utils/api";
 
 export default function Careers() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [jobs] = useState([
-    {
-      role: "AI Engineer",
-      exp: "0–2 yrs",
-      location: "Remote / Hybrid",
-      type: "Full-Time",
-      iconBg: "bg-purple-600",
-      icon: "ri-robot-2-line",
-      tags: ["Python", "LLMs", "AI APIs"],
-      gradient: "from-purple-500 to-[#391b61]",
-    },
-    {
-      role: "Full Stack Developer (MERN)",
-      exp: "0–2 yrs",
-      location: "Hybrid – Noida",
-      type: "Full-Time",
-      iconBg: "bg-blue-600",
-      icon: "ri-code-box-line",
-      tags: ["React", "Node.js", "MongoDB"],
-      gradient: "from-blue-500 to-indigo-800",
-    },
-    {
-      role: "Frontend React Developer",
-      exp: "0–1 yr",
-      location: "Remote / Hybrid",
-      type: "Internship",
-      iconBg: "bg-pink-600",
-      icon: "ri-brackets-line",
-      tags: ["React", "Tailwind", "UI/UX"],
-      gradient: "from-pink-400 to-violet-700",
-    },
-    {
-      role: "Cloud & DevOps Engineer",
-      exp: "0–2 yrs",
-      location: "Hybrid / Remote",
-      type: "Full-Time",
-      iconBg: "bg-cyan-600",
-      icon: "ri-cloud-line",
-      tags: ["AWS", "Docker", "CI/CD"],
-      gradient: "from-cyan-400 to-teal-700",
-    },
-    {
-      role: "Automation Engineer",
-      exp: "0–2 yrs",
-      location: "Remote / On-site",
-      type: "Full-Time",
-      iconBg: "bg-green-600",
-      icon: "ri-flashlight-line",
-      tags: ["Zapier", "API Scripts", "Bots"],
-      gradient: "from-green-400 to-emerald-700",
-    },
-    {
-      role: "UI/UX Designer",
-      exp: "0–1 yr",
-      location: "Remote / Hybrid",
-      type: "Internship",
-      iconBg: "bg-orange-600",
-      icon: "ri-pencil-ruler-2-line",
-      tags: ["Figma", "Wireframes", "Prototyping"],
-      gradient: "from-orange-500 to-amber-800",
-    },
-  ]);
+  useEffect(() => {
+    async function fetchJobs() {
+      try {
+        const res = await get("/api/jobs");
+        if (res && res.data && Array.isArray(res.data)) {
+          setJobs(res.data);
+        } else if (Array.isArray(res)) {
+          setJobs(res);
+        } else {
+          setJobs([]);
+        }
+      } catch (err) {
+        console.error("Error fetching live jobs:", err);
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchJobs();
+  }, []);
 
   function openApplyModal(role) {
     setSelectedRole(role);
@@ -161,10 +122,35 @@ export default function Careers() {
           </p>
         </div>
 
-        <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {jobs.map((job, i) => (
-            <JobCard key={i} job={job} openApplyModal={openApplyModal} />
-          ))}
+        <div className="mt-10">
+          {loading ? (
+            <div className="py-16 text-center text-white/50 text-sm animate-pulse">
+              Checking current openings...
+            </div>
+          ) : jobs.length === 0 ? (
+            <div className="p-10 md:p-14 rounded-2xl bg-[#0d152b]/60 border border-white/10 text-center max-w-xl mx-auto backdrop-blur-md">
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4 text-white/50">
+                <i className="ri-briefcase-line text-2xl"></i>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">No Open Positions Currently</h3>
+              <p className="text-sm text-[var(--vs-light)]/65 leading-relaxed mb-6">
+                We do not have any active openings at this moment. However, our team is constantly growing and we are always open to meeting talented engineers, designers, and innovators.
+              </p>
+              <button
+                onClick={() => openApplyModal("")}
+                className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[var(--vs-primary)] to-[var(--vs-secondary)] text-white text-sm font-semibold hover:opacity-90 transition shadow-lg inline-flex items-center gap-2"
+              >
+                <span>Submit General Application</span>
+                <span>→</span>
+              </button>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {jobs.map((job, i) => (
+                <JobCard key={job._id || i} job={job} openApplyModal={openApplyModal} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -290,10 +276,11 @@ function ApplyModal({ role, onClose }) {
     formData.append("resume", resumeFile);
 
     try {
-      const response = await fetch("https://veloshift-backend.onrender.com/api/careers", {
+      const response = await fetch(`${API_BASE}/api/careers`, {
         method: "POST",
         body: formData,
       });
+
 
       const data = await response.json();
 

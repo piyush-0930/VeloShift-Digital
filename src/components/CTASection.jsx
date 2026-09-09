@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { post } from "../utils/api";
 
 export default function CTASection() {
   const [email, setEmail] = useState("");
@@ -9,39 +10,32 @@ export default function CTASection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email) {
+    if (!email || !email.trim()) {
       setType("error");
       setMessage("Please enter your email");
       return;
     }
 
-    const enteredEmail = email;
-    setEmail(""); // ✅ instant clear
+    const enteredEmail = email.trim();
+    setEmail(""); // instant clear
 
     try {
       setLoading(true);
       setMessage(null);
 
-      const res = await fetch("https://veloshift-backend.onrender.com/api/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: enteredEmail }),
-      });
+      const data = await post("/api/subscribe", { email: enteredEmail }, false);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setType("error");
-        setMessage(data.msg || "Something went wrong");
-      } else {
+      if (data && (data.success || data.msg?.includes("success"))) {
         setType("success");
-        setMessage("Subscribed successfully!");
+        setMessage(data.msg || "Subscribed successfully!");
+      } else {
+        setType("error");
+        setMessage(data?.msg || data?.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
+      console.error("Subscription error:", err);
       setType("error");
-      setMessage("Server error");
+      setMessage("Unable to subscribe. Please try again later.");
     } finally {
       setLoading(false);
 
@@ -50,6 +44,7 @@ export default function CTASection() {
       }, 3000);
     }
   };
+
 
   return (
     <section className="relative w-full py-24 bg-[var(--vs-bg)] text-center px-6 overflow-hidden">

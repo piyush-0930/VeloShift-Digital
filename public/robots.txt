@@ -1,4 +1,6 @@
 User-agent: *
+Disallow: /admin
+Disallow: /admin/
 Allow: /
 
-Sitemap: https://veloshift.digital/sitemap.xml
+Sitemap: https://veloshift.digital/sitemap.xml
